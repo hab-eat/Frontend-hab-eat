@@ -45,6 +45,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import UserInfoPage from './pages/UserInfoPage';
 import NutritionPage from './pages/NutritionPage';
+import NavigationBar from './components/NavigationBar';
 
 const App = () => {
   const [isInfoComplete, setIsInfoComplete] = useState(false);
@@ -55,17 +56,24 @@ const App = () => {
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            isInfoComplete ? <Navigate to="nutrition" /> : <UserInfoPage onComplete={handleInfoComplete} />
-          }
-        />
-        <Route path="/nutrition" element={<NutritionPage />} />
-        <Route path="/habit" element={<div>습관 페이지 준비중...</div>} />
-        <Route path="/mypage" element={<div>마이페이지 준비중...</div>} />
-      </Routes>
+      <div style={{ paddingBottom: '80px' }}> {/* 네비게이션 바 높이만큼 여백 추가 */}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isInfoComplete ? (
+                <Navigate to="nutrition" />
+              ) : (
+                <UserInfoPage onComplete={handleInfoComplete} />
+              )
+            }
+          />
+          <Route path="/nutrition" element={<NutritionPage />} />
+          <Route path="/habit" element={<div>습관 페이지 준비중...</div>} />
+          <Route path="/mypage" element={<div>마이페이지 준비중...</div>} />
+        </Routes>
+        <NavigationBar /> {/* 네비게이션 바 추가 */}
+      </div>
     </Router>
   );
 };

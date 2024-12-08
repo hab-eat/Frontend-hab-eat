@@ -1,47 +1,49 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './NutritionPage.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import NavigationBar from '../components/NavigationBar'; // 네비게이션 바 컴포넌트 가져오기
 
 const NutritionPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
+  const [meals, setMeals] = useState({
+    breakfast: ['토스트', '커피'],
+    lunch: ['샐러드'],
+    dinner: [],
+  });
 
-const [isCalendarOpen, setIsCalendarOpen] = useState(false); // 달력 상태 추가
+  const handleCalendarToggle = () => {
+    setIsCalendarOpen(!isCalendarOpen);
+  };
 
-const handleCalendarToggle = () => {
-  setIsCalendarOpen(!isCalendarOpen); // 달력 열기/닫기 토글
-};
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setIsCalendarOpen(false); // 날짜 선택 후 달력 닫기
+    setIsCalendarOpen(false);
   };
-  
 
   return (
     <div className="nutrition-container">
       {/* 달력 버튼 */}
       <div className="calendar-section">
         <span className="selected-date">
-        {selectedDate.toLocaleDateString('ko-KR')}
+          {selectedDate.toLocaleDateString('ko-KR')}
         </span>
         <button className="calendar-button" onClick={handleCalendarToggle}>
-        달력
+          달력
         </button>
       </div>
 
       {/* 달력 표시 */}
-    {isCalendarOpen && (
-      <DatePicker
-        selected={selectedDate}
-        onChange={handleDateChange}
-        inline 
-        className="datepicker"
-      />
-      
-    )}
+      {isCalendarOpen && (
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          inline
+          className="datepicker"
+        />
+      )}
 
       {/* 영양 정보 섹터 */}
       <div className="nutrition-info">
@@ -54,38 +56,34 @@ const handleCalendarToggle = () => {
         <p>탄수화물: 200g | 지방: 50g | 당: 20g</p>
       </div>
 
-      {/* 식사 섹터 */}
+      {/* 식사 섹션 */}
       <div className="meal-section">
-        <div className="meal-time">
-          <h3>아침</h3>
-          <div className="meal-items">등록된 음식이 없습니다.</div>
-        </div>
-        <div className="meal-time">
-          <h3>점심</h3>
-          <div className="meal-items">등록된 음식이 없습니다.</div>
-        </div>
-        <div className="meal-time">
-          <h3>저녁</h3>
-          <div className="meal-items">등록된 음식이 없습니다.</div>
-        </div>
+        {['breakfast', 'lunch', 'dinner'].map((mealKey) => (
+          <div key={mealKey} className="meal-container">
+            <h3 className="meal-title">
+              {mealKey === 'breakfast'
+                ? '아침'
+                : mealKey === 'lunch'
+                ? '점심'
+                : '저녁'}
+            </h3>
+            <div className="meal-box">
+              {meals[mealKey].length > 0 ? (
+                meals[mealKey].map((food, idx) => (
+                  <p key={idx} className="meal-item">
+                    {food}
+                  </p>
+                ))
+              ) : (
+                <p>등록된 음식이 없습니다.</p>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* 네비게이터 바 */}
-      <div className="navigator">
-        <Link to="/nutrition" className="navigator-item active">
-          식단
-        </Link>
-        <Link to="/habit" className="navigator-item">
-          습관
-        </Link>
-        <button className="navigator-item camera">📷</button>
-        <Link to="/mypage" className="navigator-item">
-          마이페이지
-        </Link>
-        <Link to="/call" className="navigator-item">
-          문의하기
-        </Link>
-      </div>
+      {/* 네비게이션 바 */}
+      <NavigationBar />
     </div>
   );
 };
