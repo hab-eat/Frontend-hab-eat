@@ -1,6 +1,0 @@
-module Pods_habeat_habeatTests {
-  umbrella header "Pods-habeat-habeatTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
