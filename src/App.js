@@ -46,6 +46,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import UserInfoPage from './pages/UserInfoPage';
 import NutritionPage from './pages/NutritionPage';
 import NavigationBar from './components/NavigationBar';
+import MyPage from './pages/MyPage';
+import Settings from './pages/Settings';
+import Guide from './pages/Guide';
+import Notifications from './pages/Notifications';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 const App = () => {
   const [isInfoComplete, setIsInfoComplete] = useState(false);
@@ -70,7 +75,12 @@ const App = () => {
           />
           <Route path="/nutrition" element={<NutritionPage />} />
           <Route path="/habit" element={<div>습관 페이지 준비중...</div>} />
-          <Route path="/mypage" element={<div>마이페이지 준비중...</div>} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/guide" element={<Guide />} />
+          <Route path="/settings/edit-profile" element={<UserInfoPage />} />
+          <Route path="/settings/notifications" element={<Notifications />} />
+          <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
         <NavigationBar /> {/* 네비게이션 바 추가 */}
       </div>
