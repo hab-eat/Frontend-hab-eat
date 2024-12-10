@@ -51,6 +51,9 @@ import Settings from './pages/Settings';
 import Guide from './pages/Guide';
 import Notifications from './pages/Notifications';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import HabitPage from './pages/HabitPage';
+import JoinPage from './pages/JoinPage';
+import ChallengePage from './pages/ChallengePage';
 
 const App = () => {
   const [isInfoComplete, setIsInfoComplete] = useState(false);
@@ -74,13 +77,15 @@ const App = () => {
             }
           />
           <Route path="/nutrition" element={<NutritionPage />} />
-          <Route path="/habit" element={<div>습관 페이지 준비중...</div>} />
+          <Route path="/habit" element={<HabitPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/guide" element={<Guide />} />
           <Route path="/settings/edit-profile" element={<UserInfoPage />} />
           <Route path="/settings/notifications" element={<Notifications />} />
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/join" element={<JoinPage />} />
+          <Route path="/challenge" element={<ChallengePage />} />
         </Routes>
         <NavigationBar /> {/* 네비게이션 바 추가 */}
       </div>

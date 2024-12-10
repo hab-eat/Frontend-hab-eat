@@ -8,8 +8,8 @@ import MyPageItem from "./elements/MyPageItem"; // 공통 컴포넌트 가져오
 // import alarm from "./alarm.svg";    // 알림 설정 아이콘
 
 import back from "../img/back.svg";  // 뒤로가기 아이콘
-import editIcon from "../img/edit.png";  // 정보 수정 아이콘
-import privacyIcon from "../img/privacy.png";    // 개인정보처리방침 아이콘
+import editIcon from "../img/edit.svg";  // 정보 수정 아이콘
+import privacyIcon from "../img/privacy.svg";    // 개인정보처리방침 아이콘
 import alarm from "../img/alarm.svg";    // 알림 설정 아이콘
 
 import "./Settings.css";
@@ -30,9 +30,9 @@ export const Settings = () => {
             src={back}
             onClick={() => navigate(-1)} // 뒤로가기
           />
-          <span className="settings-title">설정</span>
+          {/* <span className="settings-title">설정</span> */}
         </div>
-
+        <h1>설정</h1>
         {/* 설정 항목 */}
         <MyPageItem
           icon={editIcon}
