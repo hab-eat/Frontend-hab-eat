@@ -21,10 +21,13 @@ export const MyPage = () => {
 
   return (
     <div className="mypage">
+      <div className='top'>
+        <h1 className='title'>마이페이지</h1>
+      </div>
       <div className="div">
-        <div className="mypage-header">
+        {/* <div className="mypage-header">
           <span className="mypage-title">마이페이지</span>
-        </div>
+        </div> */}
 
         {/* 버튼 리스트 */}
         <MyPageItem

@@ -19,3 +19,76 @@
     background-color: #f9f9f9;
   }
    */
+
+/* 커스텀 네비게이션 스타일 */
+.custom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #00cba6;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px 5px 0 0; /* 모서리 둥글게 */
+    overflow: visible;
+    position: relative; /* 카메라 버튼 위치 조정을 위한 상대 위치 */
+  }
+  
+  .custom-header .month-label {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .custom-header .nav-button {
+    width: 30px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .custom-header .nav-button:hover {
+    opacity: 0.8;
+  }
+  
+  .custom-header .camera-button {
+    background-color: white;
+    color: #00cba6;
+    border: none;
+    width: 30px;
+    height: 30px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    /* margin-top: 10px; */
+    position: absolute; /* 네비게이션의 중앙으로 이동 */
+    right: 20px; /* 오른쪽으로 정렬 */
+    top: 50%;
+    transform: translateY(-50%); /* 정확히 수직 중앙 정렬 */
+  }
+  
+  .custom-header .camera-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* React-Calendar 기본 스타일 커스터마이즈 */
+  .react-calendar {
+    border: none;
+    /* border-radius: 0 0 10px 10px;  */
+  }
+  
+  .manage {
+    width: 100%;
+    padding: 0;
+    border: 1.5px solid #00C5A1;
+    border-radius: 5px;
+    margin-top: 10%;
+    overflow: hidden;
+  }
+
+  .month {
+    display: flex;
+    align-items: center;
+  }

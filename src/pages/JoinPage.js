@@ -36,7 +36,8 @@ const JoinPage = () => {
   };
 
   return (
-    <div className='App'>
+    <div className='join'>
+        <div className='App'>
         <div className='div'>
             <div className="settings-header">
             <img
@@ -63,6 +64,7 @@ const JoinPage = () => {
       
       {/* <p>챌린지 ID: {id}</p> */}
       <button onClick={() => handleComplete(id)}>완료</button>
+    </div>
     </div>
   );
 };

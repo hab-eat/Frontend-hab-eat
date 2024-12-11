@@ -1,10 +1,13 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import habitIcon from "../img/habit-icon.svg";
-import back from "../img/back.svg";
+// import back from "../img/back.svg";
+import './ChallengePage.css'
+import left from "../img/left.svg";
+import right from "../img/right.svg";
 
 const StyledCalendar = styled(Calendar)`
   width: 100%; /* 캘린더를 부모 요소의 너비에 맞게 설정 */
@@ -14,8 +17,15 @@ const StyledCalendar = styled(Calendar)`
 //   padding: 20px; /* 내부 여백 */
   height: 150%;
   margin: 0 auto; /* 중앙 정렬 */
-  border: none; /* 기본 테두리 제거 */
+  // border: 1.5px solid #00C5A1;
+  // border-radius: 2%;
+  // border: none; /* 기본 테두리 제거 */
 //   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 추가 (선택 사항) */
+
+.react-calendar {
+    border: none;
+    border-radius: 0 0 10px 10px; 
+  }
 
   .react-calendar__tile {
     background-color: #fdfdfd;
@@ -31,12 +41,19 @@ const StyledCalendar = styled(Calendar)`
     height: 70px; /* 일별 셀 높이 */
   }
 
+  react-calendar__month-view__weekdays__weekday {
+    border: none;
+  }
+
   .react-calendar__tile--highlight {
     background-color: #c5f5d1; /* 주간 챌린지 달성 하이라이트 */
   }
 
   .react-calendar__navigation {
-  display: flex; /* flex를 제거하고 버튼 크기 고정 */
+    display: flex; /* flex를 제거하고 버튼 크기 고정 */
+    background-color: #00C5A1;
+    color: white;
+  }
 
   .tile-icon {
     position: absolute;
@@ -45,8 +62,6 @@ const StyledCalendar = styled(Calendar)`
     font-size: 14px;
     color: #00C5A1;
   }
-  
-}
 
   .react-calendar__tile--now {
     background-color:  #00C5A1;
@@ -62,7 +77,7 @@ const StyledCalendar = styled(Calendar)`
   .react-calendar__navigation__label {
     font-size: 16px;
     font-weight: bold;
-    color: #00C5A1;
+    color: white;
   }
 
   button {
@@ -73,13 +88,46 @@ const StyledCalendar = styled(Calendar)`
   .react-calendar__navigation__arrow {
     background-color: transparent;
     border: none;
-    color: #00C5A1;
+    color: white;
   }
+
+  /* 점선 제거 */
+.react-calendar__month-view__weekdays {
+  border: none !important; /* 요일 헤더 컨테이너 경계선 제거 */
+  display: flex; /* 플렉스 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: space-around; /* 요일 간 간격 균등 배분 */
+  height: 50px; /* 요일 라벨 높이 설정 */
+  background-color: #f5f5f5; /* 선택적으로 배경색 추가 */
+  // margin-top: 5px;
+  // margin-bottom: 5px;
+  height: 50px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  border: none !important; /* 각 요일 셀 경계선 제거 */
+  outline: none !important; /* 포커스 점선 제거 */
+  text-transform: uppercase; /* 영어 약자를 대문자로 */
+  font-weight: bold; /* 강조 */
+}
+
+/* 요일 셀 스타일 */
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+/* 캘린더 전체 스타일 */
+.react-calendar {
+  border: none; /* 캘린더 외부 테두리 제거 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  border-radius: 10px; /* 둥근 모서리 */
+}
+
 `;
 
 
 const ChallengePage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
   const [date, setDate] = React.useState(new Date());
 
   // 예제: 각 날짜의 챌린지 달성 여부 데이터
@@ -155,26 +203,71 @@ const ChallengePage = () => {
     return null;
   };
 
+  const handleDayFormat = (locale, date) => {
+    return date.getDate(); // 날짜만 반환
+  };
+
+  const [activeStartDate, setActiveStartDate] = useState(new Date()); // 활성화된 날짜
+
+  // 이전 달로 이동
+  const handlePrevMonth = () => {
+    const prevMonth = new Date(activeStartDate);
+    prevMonth.setMonth(activeStartDate.getMonth() - 1);
+    setActiveStartDate(prevMonth);
+  };
+
+  // 다음 달로 이동
+  const handleNextMonth = () => {
+    const nextMonth = new Date(activeStartDate);
+    nextMonth.setMonth(activeStartDate.getMonth() + 1);
+    setActiveStartDate(nextMonth);
+  };
+
   return (
-    <div className="App">
-        <div className='div'>
-        <div className="settings-header">
-          <img
-            className="settings-back-icon"
-            alt="Back"
-            src={back}
-            onClick={() => navigate(-1)} // 뒤로가기
+    <div className='challengePage'>
+      <div className='top'>
+        {/* <img
+                className="settings-back-icon"
+                alt="Back"
+                src={back}
+                onClick={() => navigate(-1)} // 뒤로가기
+              /> */}
+        <h1 className='title'>챌린지</h1>
+      </div>
+      <div className="App">
+        <div className='manage'>
+          {/* <div className="settings-header">
+            <img
+              className="settings-back-icon"
+              alt="Back"
+              src={back}
+              onClick={() => navigate(-1)} // 뒤로가기
+            />
+            <span className="settings-title"></span>
+          </div>
+          <h1>챌린지 관리</h1> */}
+            {/* 커스텀 네비게이션 */}
+          <div className="custom-header">
+            <div className='month'>
+              <button onClick={handlePrevMonth} className="nav-button"><img src={left}></img></button>
+              <span className="month-label">{activeStartDate.getMonth() + 1}월</span>
+              <button onClick={handleNextMonth} className="nav-button"><img src={right}></img></button>
+            </div>
+            <button className="camera-button">📷</button> {/* 카메라 버튼 */}
+          </div>
+          <StyledCalendar
+            locale="en-US" // 영어 약자로 표시
+            activeStartDate={activeStartDate} // 활성화된 시작 날짜
+            onActiveStartDateChange={({ activeStartDate }) => setActiveStartDate(activeStartDate)}
+            onChange={handleDateChange}
+            value={date}
+            tileContent={tileContent} // 날짜별 아이콘 표시
+            tileClassName={tileClassName} // 주간 달성 여부 하이라이트
+            formatDay={handleDayFormat} // 날짜 포맷 수정
+            showNavigation={false}
           />
-          <span className="settings-title"></span>
         </div>
-        <h1>챌린지 관리</h1>
-        </div>
-      <StyledCalendar
-        onChange={handleDateChange}
-        value={date}
-        tileContent={tileContent} // 날짜별 아이콘 표시
-        tileClassName={tileClassName} // 주간 달성 여부 하이라이트
-      />
+      </div>
     </div>
   );
 };
