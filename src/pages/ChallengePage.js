@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
@@ -223,6 +223,20 @@ const ChallengePage = () => {
     setActiveStartDate(nextMonth);
   };
 
+  const fileInputRef = useRef(null);
+
+  const handleCameraClick = () => {
+    fileInputRef.current.click(); // 파일 입력 창 열기
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log('Captured file:', file);
+      alert(`사진이 선택되었습니다: ${file.name}`);
+    }
+  };
+
   return (
     <div className='challengePage'>
       <div className='top'>
@@ -249,11 +263,19 @@ const ChallengePage = () => {
             {/* 커스텀 네비게이션 */}
           <div className="custom-header">
             <div className='month'>
-              <button onClick={handlePrevMonth} className="nav-button"><img src={left}></img></button>
+              <button onClick={handlePrevMonth} className="nav-button"><img src={left} alt='prev'></img></button>
               <span className="month-label">{activeStartDate.getMonth() + 1}월</span>
-              <button onClick={handleNextMonth} className="nav-button"><img src={right}></img></button>
+              <button onClick={handleNextMonth} className="nav-button"><img src={right} alt='next'></img></button>
             </div>
-            <button className="camera-button">📷</button> {/* 카메라 버튼 */}
+            <button className="camera-button" onClick={handleCameraClick}>📷</button> {/* 카메라 버튼 */}
+            <input
+            type="file"
+            accept="image/*"
+            capture="camera" // 카메라 호출
+            style={{ display: 'none' }} // 숨겨진 input
+            ref={fileInputRef}
+            onChange={handleFileChange}
+          />
           </div>
           <StyledCalendar
             locale="en-US" // 영어 약자로 표시
