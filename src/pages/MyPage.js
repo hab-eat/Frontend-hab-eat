@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import MyPageItem from "./elements/MyPageItem";  // 목록(아이템) 컴포넌트
+import NavigationBar from '../components/NavigationBar'; // 네비게이션 바 컴포넌트 가져오기
 
 // import settingsIcon from "./settings.svg";  // 설정 아이콘
 // import guideIcon from "./guide.svg";    // 이용안내 아이콘
@@ -53,6 +54,7 @@ export const MyPage = () => {
 
         <p className="p">ⓒ 2024. HAB-EAT All rights reserved</p>
       </div>
+      <NavigationBar />
     </div>
   );
 };

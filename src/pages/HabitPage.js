@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./HabitPage.css";
+import NavigationBar from '../components/NavigationBar'; // 네비게이션 바 컴포넌트 가져오기
 
 export const HabitPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const API_URL = process.env.REACT_APP_API_URL;
   const TOKEN = process.env.REACT_APP_API_TOKEN;
 
@@ -17,14 +18,76 @@ export const HabitPage = () => {
   const [error, setError] = useState(null);
 
   // API 호출 함수
-  const fetchChallenges = async () => {
+  // const fetchChallenges = async () => {
+  //   setLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     const token = `${TOKEN}`; // 로그인 토큰 가져오기
+  //     if (!token) throw new Error("로그인 토큰이 없습니다. 다시 로그인해주세요.");
+
+  //     const response = await fetch(`${API_URL}challenges`, {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Authorization": `Bearer ${token}`, // 토큰 포함
+  //       },
+  //       credentials: "include", // 필요시 쿠키 전송
+  //     });
+
+  //     if (!response.ok) {
+  //       if (response.status === 401) {
+  //         // 인증 만료 또는 실패 처리
+  //         alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+  //         navigate("/login");
+  //         return;
+  //       }
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+
+  //     const data = await response.json();
+
+  //     // 데이터 상태 업데이트
+  //     setAvailableChallenges(
+  //       data.availableChallenges.map((challenge) => ({
+  //         id: challenge.id,
+  //         title: challenge.name,
+  //         description: challenge.description,
+  //         targetUserType: challenge.targetUserType,
+  //         type: challenge.type,
+  //       }))
+  //     );
+
+  //     setOngoingChallenges(
+  //       data.ongingChallenges.map((challenge) => ({
+  //         id: challenge.id, // 서버에서 자동 생성될 경우 0으로 설정
+  //         name: challenge.name,
+  //         userId: `${TOKEN}`, // 사용자 ID는 토큰에서 가져오거나 백엔드에서 처리
+  //         challengeId: challenge.id,
+  //         challengeType: challenge.type || "unknown", // 챌린지 타입 (필요 시 선택적으로 설정)
+  //         goalDays: challenge.goalDays,
+  //         successDays: challenge.successDays, // 처음에는 성공한 일수가 없으므로 0
+  //         startDate: challenge.startDate, // 현재 날짜를 시작일로 설정
+  //         endDate: challenge.endDate, // 7일 후 종료
+  //         lastSuccessDate: challenge.lastSuccessDate, // 초기에는 성공 날짜 없음
+  //         lastCheckDate: challenge.lastCheckDate, // 초기에는 체크 날짜 없음
+  //         status: challenge.status, // 활성 상태로 설정
+  //       }))
+  //     );
+  //   } catch (error) {
+  //     setError(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const fetchChallenges = useCallback(async () => {
     setLoading(true);
     setError(null);
-
+  
     try {
       const token = `${TOKEN}`; // 로그인 토큰 가져오기
       if (!token) throw new Error("로그인 토큰이 없습니다. 다시 로그인해주세요.");
-
+  
       const response = await fetch(`${API_URL}challenges`, {
         method: "GET",
         headers: {
@@ -33,7 +96,7 @@ export const HabitPage = () => {
         },
         credentials: "include", // 필요시 쿠키 전송
       });
-
+  
       if (!response.ok) {
         if (response.status === 401) {
           // 인증 만료 또는 실패 처리
@@ -43,25 +106,34 @@ export const HabitPage = () => {
         }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+  
       const data = await response.json();
-
+  
       // 데이터 상태 업데이트
       setAvailableChallenges(
         data.availableChallenges.map((challenge) => ({
           id: challenge.id,
           title: challenge.name,
           description: challenge.description,
-          status: "available",
+          targetUserType: challenge.targetUserType,
+          type: challenge.type,
         }))
       );
-
+  
       setOngoingChallenges(
         data.ongingChallenges.map((challenge) => ({
           id: challenge.id,
-          title: challenge.name,
-          description: challenge.description,
-          status: "participating",
+          name: challenge.name,
+          userId: `${TOKEN}`, // 사용자 ID는 토큰에서 가져오거나 백엔드에서 처리
+          challengeId: challenge.id,
+          challengeType: challenge.type || "unknown",
+          goalDays: challenge.goalDays,
+          successDays: challenge.successDays,
+          startDate: challenge.startDate,
+          endDate: challenge.endDate,
+          lastSuccessDate: challenge.lastSuccessDate,
+          lastCheckDate: challenge.lastCheckDate,
+          status: challenge.status,
         }))
       );
     } catch (error) {
@@ -69,11 +141,12 @@ export const HabitPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_URL, TOKEN, navigate]); // 필요한 의존성만 추가
 
   useEffect(() => {
     fetchChallenges();
-  }, []);
+  }, [fetchChallenges]);
+  
 
   const openModal = (challenge) => {
     setSelectedChallenge(challenge);
@@ -105,7 +178,7 @@ export const HabitPage = () => {
         goalDays: days,
         successDays: 0, // 처음에는 성공한 일수가 없으므로 0
         startDate: new Date().toISOString(), // 현재 날짜를 시작일로 설정
-        endDate: new Date(new Date().setDate(new Date().getDate() + days)).toISOString(), // goalDays 후 종료일 계산
+        endDate: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString(), // goalDays 후 종료일 계산
         lastSuccessDate: null, // 초기에는 성공 날짜 없음
         lastCheckDate: null, // 초기에는 체크 날짜 없음
         status: true, // 활성 상태로 설정
@@ -150,15 +223,29 @@ export const HabitPage = () => {
     }
   };
   
-
   // const manageChallenge = (id) => {
-  //   navigate(`/challenge?id=${id}`, { state: { id } });
+  //   const selected = ongoingChallenges.find((challenge) => challenge.id === id);
+  //   navigate(`/challenge`, { state: { challenge: selected } });
   // };
 
   const manageChallenge = (id) => {
+    const currentDate = new Date();
+    const month = currentDate.getMonth() + 1; // 0-based -> 1-based
+    const year = currentDate.getFullYear();
     const selected = ongoingChallenges.find((challenge) => challenge.id === id);
-    navigate(`/challenge`, { state: { challenge: selected } });
+    // console.log("State data for navigation:", {
+    //   challenge: selected,
+    //   goalDays: selected.goalDays,
+    //   month: month,
+    //   year: year,
+    // });
+    if (selected) {
+      navigate(`/challenge`, { state: { challengeId: selected.id, goalDays: selected.goalDays, month, year } });
+    } else {
+      console.error("챌린지를 찾을 수 없습니다.");
+    }
   };
+  
   
 
   if (loading) return <p>Loading...</p>;
@@ -180,7 +267,7 @@ export const HabitPage = () => {
                     className="ing"
                     onClick={() => manageChallenge(challenge.id)}
                   >
-                    {challenge.title}
+                    {challenge.name}
                   </button>
                 </li>
               ))
@@ -232,6 +319,7 @@ export const HabitPage = () => {
           </div>
         </div>
       )}
+      <NavigationBar />
     </div>
   );
 };

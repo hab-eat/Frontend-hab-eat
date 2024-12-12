@@ -63,7 +63,7 @@ import Guide from './pages/Guide';
 import Notifications from './pages/Notifications';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import HabitPage from './pages/HabitPage';
-import JoinPage from './pages/JoinPage';
+// import JoinPage from './pages/JoinPage';
 import ChallengePage from './pages/ChallengePage';
 
 const App = () => {
@@ -110,7 +110,6 @@ const App = () => {
           <Route path="/settings/edit-profile" element={<UserInfoPage />} />
           <Route path="/settings/notifications" element={<Notifications />} />
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/join" element={<JoinPage />} />
           <Route path="/challenge" element={<ChallengePage />} />
         </Routes>
         {isAuthenticated && <NavigationBar />}{' '}
