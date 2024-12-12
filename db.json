@@ -1,0 +1,33 @@
+{
+    "availableChallenges": [
+      {
+        "id": 1,
+        "name": "식단",
+        "description": "적당량의 영양 섭취",
+        "targetUserType": "general",
+        "type": "habit"
+      },
+      {
+        "id": 2,
+        "name": "운동",
+        "description": "운동 기구 찍기",
+        "targetUserType": "general",
+        "type": "habit"
+      }
+    ],
+    "ongoingChallenges": [
+      {
+        "id": 3,
+        "name": "양치",
+        "description": "칫솔 찍기",
+        "targetUserType": "diet",
+        "type": "habit",
+        "startDate": "2024-12-10T09:17:24.803Z",
+        "endDate": "2024-12-17T09:17:24.803Z",
+        "goalDays": 7,
+        "successDays": 5,
+        "status": true
+      }
+    ]
+  }
+  

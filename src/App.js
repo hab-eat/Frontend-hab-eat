@@ -46,18 +46,25 @@
 // };
 
 // export default App;
-
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import UserInfoPage from "./pages/UserInfoPage";
-import NutritionPage from "./pages/NutritionPage";
-import NavigationBar from "./components/NavigationBar";
-import MyPage from "./pages/MyPage";
-import Settings from "./pages/Settings";
-import Guide from "./pages/Guide";
-import Notifications from "./pages/Notifications";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import UserInfoPage from './pages/UserInfoPage';
+import NutritionPage from './pages/NutritionPage';
+import NavigationBar from './components/NavigationBar';
+import MyPage from './pages/MyPage';
+import Settings from './pages/Settings';
+import Guide from './pages/Guide';
+import Notifications from './pages/Notifications';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import HabitPage from './pages/HabitPage';
+import JoinPage from './pages/JoinPage';
+import ChallengePage from './pages/ChallengePage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 여부 상태
@@ -69,12 +76,12 @@ const App = () => {
 
   const handleInfoComplete = () => {
     setIsInfoComplete(true); // 유저 정보 입력 완료 시 상태 변경
-    console.log(isAuthenticated,isInfoComplete)
+    console.log(isAuthenticated, isInfoComplete);
   };
 
   return (
     <Router>
-      <div style={{ paddingBottom: "80px" }}>
+      <div style={{ paddingBottom: '80px' }}>
         <Routes>
           {/* 초기 화면: LoginPage */}
           <Route
@@ -83,7 +90,6 @@ const App = () => {
               isAuthenticated ? (
                 isInfoComplete ? (
                   <Navigate to="/nutrition" />
-              
                 ) : (
                   <Navigate to="/userinfo" />
                 )
@@ -91,24 +97,27 @@ const App = () => {
                 <LoginPage onLoginSuccess={handleLoginSuccess} />
               )
             }
-              
-            
           />
-          <Route path="/userinfo" element={<UserInfoPage onComplete={handleInfoComplete} />} />
+          <Route
+            path="/userinfo"
+            element={<UserInfoPage onComplete={handleInfoComplete} />}
+          />
           <Route path="/nutrition" element={<NutritionPage />} />
-          <Route path="/habit" element={<div>습관 페이지 준비중...</div>} />
+          <Route path="/habit" element={<HabitPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/guide" element={<Guide />} />
           <Route path="/settings/edit-profile" element={<UserInfoPage />} />
           <Route path="/settings/notifications" element={<Notifications />} />
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/join" element={<JoinPage />} />
+          <Route path="/challenge" element={<ChallengePage />} />
         </Routes>
-        {isAuthenticated && <NavigationBar />} {/* 로그인 후에만 네비게이션 바 표시 */}
+        {isAuthenticated && <NavigationBar />}{' '}
+        {/* 로그인 후에만 네비게이션 바 표시 */}
       </div>
     </Router>
   );
 };
 
 export default App;
-

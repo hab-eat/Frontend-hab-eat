@@ -27,9 +27,9 @@ export const Notifications = () => {
             src={back}
             onClick={() => navigate(-1)} // 뒤로가기
           />
-          <span className="settings-title">알림</span>
+          {/* <span className="settings-title">알림</span> */}
         </div>
-
+        <h1>알림</h1>
         {/* 설정 항목들 */}
         <div className="settings-item">
           <span>식단 업로드</span>

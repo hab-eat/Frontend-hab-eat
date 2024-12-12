@@ -1,0 +1,11 @@
+.App {
+    text-align: center;
+}
+
+.goal {
+    margin-top: 5%;
+}
+
+input:focus {
+    outline: #00c5a1;
+}

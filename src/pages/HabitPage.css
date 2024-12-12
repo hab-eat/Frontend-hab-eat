@@ -1,0 +1,166 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 10px;
+    margin-top: 20%;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .top {
+    position: fixed; /* 화면에 고정 */
+    top: 0; /* 화면의 최상단에 배치 */
+    left: 0; /* 화면의 왼쪽에 맞춤 */
+    width: 100%;
+    height: 60px;
+    /* box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.05); */
+    /* box-shadow: 0px 0px 23px#00000014;
+    margin: auto; */
+    background-color: white; /* 배경색 (필요 시 조정) */
+    z-index: 1000; /* 다른 요소 위로 올라오게 설정 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    padding: 10px 0px 20px 0; /* 적당한 여백 추가 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 하단에 그림자 추가 (선택 사항) */
+  }
+  
+  .section {
+    width: 100%; 
+    text-align: left;
+    margin-bottom: 40px; 
+    background-color: #ffffff;
+    /* border: 1px solid;
+    border-color: #00c5a1;
+    border-radius: 5px;
+    border-radius: 5px; */
+  }
+
+  .section h2 {
+    color: black;
+    margin-top: 5px;
+    font-size: 16px;
+  }
+  
+  /* 목록 가운데 정렬 */
+  .section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+  }
+  
+  .section li {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .section button {
+    text-align: left;
+    width: 100%;
+    height: 80px;
+    /* margin-left: 10px; */
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .ing {
+    background: linear-gradient(
+      90deg,
+      rgb(0, 203.04, 165.93) 0%,
+      rgb(0, 203, 166) 40.5%,
+      rgb(50.43, 174.41, 246.18) 100%
+    );
+  }
+
+  .available {
+    width: 100%; 
+    color: #8e8e8e;
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: #00c5a1;
+    border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  .al {
+    margin: 10%;
+    color: #8e8e8e;
+  }
+
+  .title {
+    margin-top: 30px;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .modal-actions button {
+    /* margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    width: 30px; */
+    margin: 0 10px; /* 버튼 간의 간격 */
+    padding: 0; /* 내부 여백 초기화 */
+    font-size: 20px; /* 텍스트 크기 */
+    width: 40px; /* 버튼의 너비 */
+    height: 40px; /* 버튼의 높이 (너비와 같게 설정) */
+    border-radius: 50%; /* 버튼을 완전한 동그라미로 만듦 */
+    border: 1px solid #ccc; /* 선택적으로 테두리 추가 */
+    display: flex; /* 플렉스 컨테이너로 설정 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    cursor: pointer; /* 클릭 가능한 커서 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 선택적으로 그림자 추가 */
+    transition: background-color 0.3s ease; /* 배경색 변경 애니메이션 */
+  }
+  
+  .confirm-button {
+    background: #00cba6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modal-content h2 {
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .modal-content p {
+    color: #8e8e8e;
+    font-size: 16px;
+    font-weight: 700;
+  }

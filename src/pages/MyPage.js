@@ -9,7 +9,7 @@ import MyPageItem from "./elements/MyPageItem";  // 목록(아이템) 컴포넌�
 
 import settingsIcon from "../img/settings.svg";  // 설정 아이콘
 import guideIcon from "../img/guide.svg";    // 이용안내 아이콘
-import deleteIcon from "../img/delete.png";  // 회원 탈퇴 아이콘
+import deleteIcon from "../img/delete.svg";  // 회원 탈퇴 아이콘
 import logoutIcon from "../img/logout.svg";  // 로그아웃 아이콘
 
 import "./MyPage.css";
@@ -21,10 +21,13 @@ export const MyPage = () => {
 
   return (
     <div className="mypage">
+      <div className='top'>
+        <h1 className='title'>마이페이지</h1>
+      </div>
       <div className="div">
-        <div className="mypage-header">
+        {/* <div className="mypage-header">
           <span className="mypage-title">마이페이지</span>
-        </div>
+        </div> */}
 
         {/* 버튼 리스트 */}
         <MyPageItem
