@@ -91,8 +91,8 @@ export const HabitPage = () => {
       const response = await fetch(`${API_URL}challenges`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`, // 토큰 포함
+          "Content-Type": "application/json",
         },
         credentials: "include", // 필요시 쿠키 전송
       });
