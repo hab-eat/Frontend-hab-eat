@@ -63,7 +63,6 @@ import Guide from './pages/Guide';
 import Notifications from './pages/Notifications';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import HabitPage from './pages/HabitPage';
-// import JoinPage from './pages/JoinPage';
 import ChallengePage from './pages/ChallengePage';
 import ChallengeCamera from './pages/ChallengeCamera'
 
