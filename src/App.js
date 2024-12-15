@@ -63,8 +63,8 @@ import Guide from './pages/Guide';
 import Notifications from './pages/Notifications';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import HabitPage from './pages/HabitPage';
-// import JoinPage from './pages/JoinPage';
 import ChallengePage from './pages/ChallengePage';
+import ChallengeCamera from './pages/ChallengeCamera'
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 여부 상태
@@ -111,6 +111,7 @@ const App = () => {
           <Route path="/settings/notifications" element={<Notifications />} />
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/challenge" element={<ChallengePage />} />
+          <Route path="/challenge/camera" element={<ChallengeCamera />} />
         </Routes>
         {isAuthenticated && <NavigationBar />}{' '}
         {/* 로그인 후에만 네비게이션 바 표시 */}
