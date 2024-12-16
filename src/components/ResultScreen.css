@@ -1,0 +1,25 @@
+.result-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #00CBA6, #0086D3); /* 배경 색상 */
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .result-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .result-container p {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .result-container strong {
+    color: #FFD700; /* 강조 색상 */
+  }
+  
