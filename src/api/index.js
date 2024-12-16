@@ -43,6 +43,10 @@ class Api extends BaseRestApi {
     return this.POST('/users/kakao-login', body);
   }
 
+  getPresignedUrls() {
+    return this.GET('/foods/presigned-urls');
+  }
+
   async uploadImageToSignedUrl({ signedUrl, file, type }) {
     return axios
       .put(signedUrl, file, {
