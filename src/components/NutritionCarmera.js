@@ -17,7 +17,7 @@ const NutritionCarmera = ({ setLoading }) => {
 
       try {
         // Step 1: foods/presigned-urls 호출
-        const urls = await Api.getPresignedUrls();
+        const urls = await Api.getFoodPresignedUrls();
         const { url, key } = urls[0];
         console.log('Presigned URL and Key:', { url, key });
 
@@ -31,25 +31,8 @@ const NutritionCarmera = ({ setLoading }) => {
         console.log('Image uploaded to S3 successfully');
 
         // Step 3: foods/get-image-name 호출
-        const imageNameResponse = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}foods/class-names`,
-          {
-            method: 'POST',
-            headers: {
-              authorization: `Bearer ${localStorage.getItem('Back_Token')}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ key }),
-          },
-        );
 
-        if (!imageNameResponse.ok) {
-          throw new Error(
-            `Failed to fetch image name: ${imageNameResponse.status}`,
-          );
-        }
-
-        const { name } = await imageNameResponse.json();
+        const { name } = await Api.getFoodClassName(key);
         console.log('Fetched image name:', name);
 
         setLoading(false);

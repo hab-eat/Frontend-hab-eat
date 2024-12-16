@@ -43,8 +43,12 @@ class Api extends BaseRestApi {
     return this.POST('/users/kakao-login', body);
   }
 
-  getPresignedUrls() {
+  getFoodPresignedUrls() {
     return this.GET('/foods/presigned-urls');
+  }
+
+  getFoodClassName(s3Key) {
+    return this.POST('/foods/class-names', { key: s3Key });
   }
 
   async uploadImageToSignedUrl({ signedUrl, file, type }) {
