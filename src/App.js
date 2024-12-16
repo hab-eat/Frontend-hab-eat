@@ -64,7 +64,7 @@ import Notifications from './pages/Notifications';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import HabitPage from './pages/HabitPage';
 import ChallengePage from './pages/ChallengePage';
-import ChallengeCamera from './pages/ChallengeCamera'
+import ChallengeCamera from './pages/ChallengeCamera';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 여부 상태

@@ -64,8 +64,8 @@ const NutritionPage = () => {
               {mealKey === 'breakfast'
                 ? '아침'
                 : mealKey === 'lunch'
-                ? '점심'
-                : '저녁'}
+                  ? '점심'
+                  : '저녁'}
             </h3>
             <div className="meal-box">
               {meals[mealKey].length > 0 ? (

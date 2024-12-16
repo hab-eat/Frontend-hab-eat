@@ -129,9 +129,8 @@ const UserInfoPage = () => {
 
   const navigate = useNavigate();
 
-
-  useEffect(() => { 
-    console.log('use effect')
+  useEffect(() => {
+    console.log('use effect');
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
       // 1. 카카오 서버에 인가 코드로 액세스 토큰 요청
@@ -147,10 +146,10 @@ const UserInfoPage = () => {
         })
         .then((response) => {
           const { access_token } = response.data;
-          console.log('kakao server response')
-          console.log(response.data)
+          console.log('kakao server response');
+          console.log(response.data);
           localStorage.setItem('snsToken', access_token); // 토큰을 로컬 스토리지에 저장
-          console.log("로그인 성공")
+          console.log('로그인 성공');
           navigate('/userinfo'); // UserInfoPage로 이동
         })
         .catch((error) => {
@@ -159,7 +158,6 @@ const UserInfoPage = () => {
         });
     }
   }, []);
-  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -174,7 +172,7 @@ const UserInfoPage = () => {
       return;
     }
     const snsToken = `${localStorage.getItem('snsToken')}`;
-    console.log({snsToken})
+    console.log({ snsToken });
 
     // 2. 사용자 정보와 액세스 토큰을 백엔드로 전송
     console.log({
@@ -185,7 +183,7 @@ const UserInfoPage = () => {
       sex,
       type,
       activityLevel,
-    })
+    });
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}users/kakao-login`, {
         snsToken,
@@ -197,7 +195,7 @@ const UserInfoPage = () => {
         activityLevel,
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         alert('사용자 정보가 저장되었습니다!');
         navigate('/nutrition'); // NutritionPage로 이동
       })
@@ -272,7 +270,11 @@ const UserInfoPage = () => {
       </select>
 
       <label>운동량</label>
-      <select name="activityLevel" value={formData.activityLevel} onChange={handleInputChange}>
+      <select
+        name="activityLevel"
+        value={formData.activityLevel}
+        onChange={handleInputChange}
+      >
         <option value="">운동량을 선택하세요</option>
         <option value="sedentary">아주 적음</option>
         <option value="lightlyActive">조금 적음</option>
