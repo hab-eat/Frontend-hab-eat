@@ -1,6 +1,7 @@
 // 개인정보 처리 방침 페이지
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import LoadingPage from '../pages/LoadingPage';
 
 const API_URL = process.env.REACT_APP_BAEKEND_URL;
 const TOKEN = process.env.REACT_APP_API_TOKEN;
@@ -11,8 +12,6 @@ const ChallengeCamera = () => {
   const file = location.state?.file;
   const id = location.state?.id;
   const [loading, setLoading] = useState(false); // 로딩 상태
-  // const [result, setResult] = useState(null); // 분석 결과 저장
-  // const [error, setError] = useState(null);
 
   useEffect(() => {
     // 이미지 분석 시작
@@ -52,9 +51,7 @@ const ChallengeCamera = () => {
     analyze();
   }, [file]); // file이 변경될 때만 실행
 
-  if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error}</p>;
-
+  if (loading) return <LoadingPage />;
   return (
     <div className="div">
       <h1>로딩 중...</h1>
