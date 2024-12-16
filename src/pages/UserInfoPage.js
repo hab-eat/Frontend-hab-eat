@@ -85,7 +85,7 @@ const UserInfoPage = () => {
       })
       .then((res) => {
         console.log('서버 응답:', res.data);
-    
+
         // token 추출 및 저장
         const { token } = res.data;
         if (token) {
@@ -94,7 +94,7 @@ const UserInfoPage = () => {
         } else {
           console.warn('응답에 토큰이 없습니다.');
         }
-    
+
         alert('사용자 정보가 저장되었습니다!');
         navigate('/nutrition'); // NutritionPage로 이동
       })
@@ -102,15 +102,15 @@ const UserInfoPage = () => {
         console.error('사용자 정보 저장 실패:', error);
         alert('사용자 정보 저장 실패. 다시 시도해주세요.');
       });
-      // .then((res) => {
-      //   console.log(res.data);
-      //   alert('사용자 정보가 저장되었습니다!');
-      //   navigate('/nutrition'); // NutritionPage로 이동
-      // })
-      // .catch((error) => {
-      //   console.error('사용자 정보 저장 실패:', error);
-      //   alert('사용자 정보 저장 실패. 다시 시도해주세요.');
-      // });
+    // .then((res) => {
+    //   console.log(res.data);
+    //   alert('사용자 정보가 저장되었습니다!');
+    //   navigate('/nutrition'); // NutritionPage로 이동
+    // })
+    // .catch((error) => {
+    //   console.error('사용자 정보 저장 실패:', error);
+    //   alert('사용자 정보 저장 실패. 다시 시도해주세요.');
+    // });
   };
 
   return (

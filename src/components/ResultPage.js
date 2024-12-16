@@ -8,7 +8,9 @@ const ResultPage = () => {
   return (
     <div className="result-container">
       <h1>음식 판별 결과</h1>
-      <p>판별된 음식: <strong>{name || '결과 없음'}</strong></p>
+      <p>
+        판별된 음식: <strong>{name || '결과 없음'}</strong>
+      </p>
     </div>
   );
 };
