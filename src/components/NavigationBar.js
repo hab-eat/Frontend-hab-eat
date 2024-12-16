@@ -18,20 +18,23 @@ const NavigationBar = () => {
 
       try {
         // Step 1: foods/presigned-urls 호출
-        const presignedResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}foods/presigned-urls`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('Back_Token')}`,
-            'Content-Type': 'application/json'
+        const presignedResponse = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}foods/presigned-urls`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('Back_Token')}`,
+              'Content-Type': 'application/json',
+            },
           },
-        });
+        );
 
         if (!presignedResponse.ok) {
           throw new Error('Failed to get presigned URL');
         }
 
         const urls = await presignedResponse.json();
-        const { url, key } = urls[0]
+        const { url, key } = urls[0];
         console.log('Presigned URL and Key:', { url, key });
 
         // Step 2: S3로 사진 업로드
@@ -46,17 +49,22 @@ const NavigationBar = () => {
         console.log('Image uploaded to S3 successfully');
 
         // Step 3: foods/get-image-name 호출
-        const imageNameResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}foods/class-names`, {
-          method: 'POST',
-          headers: {
-            authorization: `Bearer ${localStorage.getItem('Back_Token')}`,
-            'Content-Type': 'application/json',
+        const imageNameResponse = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}foods/class-names`,
+          {
+            method: 'POST',
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('Back_Token')}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ key }),
           },
-          body: JSON.stringify({ key }),
-        });
+        );
 
         if (!imageNameResponse.ok) {
-          throw new Error(`Failed to fetch image name: ${imageNameResponse.status}`);
+          throw new Error(
+            `Failed to fetch image name: ${imageNameResponse.status}`,
+          );
         }
 
         const { name } = await imageNameResponse.json();
@@ -84,7 +92,9 @@ const NavigationBar = () => {
         // 결과 화면
         <div className="result-container">
           <h1>음식 판별 결과</h1>
-          <p>판별된 음식: <strong>{result}</strong></p>
+          <p>
+            판별된 음식: <strong>{result}</strong>
+          </p>
         </div>
       ) : (
         // 네비게이션 바
@@ -104,7 +114,11 @@ const NavigationBar = () => {
           {/* 중앙 섹션: 카메라 */}
           <div className="nav-center">
             <button className="camera-button" onClick={handleCameraClick}>
-              <img src="/camera-icon.png" alt="카메라" className="camera-icon" />
+              <img
+                src="/camera-icon.png"
+                alt="카메라"
+                className="camera-icon"
+              />
             </button>
             <input
               type="file"
@@ -119,11 +133,19 @@ const NavigationBar = () => {
           {/* 오른쪽 섹션: 마이페이지 */}
           <div className="nav-right">
             <div className="nav-item">
-              <img src="/mypage-icon.png" alt="마이페이지" className="nav-icon" />
+              <img
+                src="/mypage-icon.png"
+                alt="마이페이지"
+                className="nav-icon"
+              />
               <span className="nav-label">마이페이지</span>
             </div>
             <div className="nav-item">
-              <img src="/contact-icon.png" alt="문의하기" className="nav-icon" />
+              <img
+                src="/contact-icon.png"
+                alt="문의하기"
+                className="nav-icon"
+              />
               <span className="nav-label">문의</span>
             </div>
           </div>
