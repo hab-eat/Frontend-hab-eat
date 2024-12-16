@@ -57,6 +57,7 @@ const StyledCalendar = styled(Calendar)`
   }
 `;
 
+
 // Helper to calculate weeks of a month
 const getMonthWeeks = (month, year) => {
   // const firstDay = new Date(year, month - 1, 1);
@@ -130,7 +131,8 @@ const getMonthWeeks = (month, year) => {
 // };
 
 // Fetch data from API
-const fetchChallengeData = async (id, startDate, endDate) => {
+const fetchChallengeData = async (id, startDate, endDate) => 
+  {
   const API_URL = process.env.REACT_APP_BACKEND_URL;
   const TOKEN = process.env.REACT_APP_API_TOKEN;
   console.log(startDate);
@@ -162,6 +164,7 @@ const ChallengePage = () => {
   const fileInputRef = useRef(null);
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   const [weekStatusMap, setWeekStatusMap] = useState({}); // 주차별 status 저장
+  const showCameraButton = challengeId === 5 || challengeId === 6;
 
   // console.log(challengeId);
   // console.log(month);
@@ -321,9 +324,15 @@ const ChallengePage = () => {
                 <img src={right} alt="next" />
               </button>
             </div>
-            <button className="camera-button" onClick={handleCameraClick}>
+            {/* <button className="camera-button" onClick={handleCameraClick}>
               <img src={cameraIcon} alt="camera"></img>
-            </button>
+            </button> */}
+            {/* 카메라 버튼 조건부 렌더링 */}
+            {showCameraButton && (
+              <button className="camera-button" onClick={handleCameraClick}>
+                <img src={cameraIcon} alt="camera" />
+              </button>
+            )}
             <input
               type="file"
               accept="image/*"
