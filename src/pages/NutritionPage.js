@@ -97,16 +97,16 @@ const NutritionPage = () => {
         ) : (
           <>
             <p>
-              칼로리: <b>1500</b>/<b>{nutrients.kcal}</b> kcal
+              칼로리: <b>1500</b>/<b>{Math.round(nutrients.kcal)}</b> kcal
             </p>
             <p>
-              탄수화물: <b>100</b>/<b>{nutrients.carbohydrate}</b>g | 단백질: <b>50</b>/<b>{nutrients.protein}</b>g
+              탄수화물: <b>100</b>/<b>{Math.round(nutrients.carbohydrate)}</b>g | 단백질: <b>50</b>/<b>{Math.round(nutrients.protein)}</b>g
             </p>
             <p>
-              지방: <b>20</b>/<b>{nutrients.fat}</b>g | 나트륨: <b>50</b>/<b>{nutrients.natrium}</b>mg
+              지방: <b>20</b>/<b>{Math.round(nutrients.fat)}</b>g | 나트륨: <b>50</b>/<b>{Math.round(nutrients.natrium)}</b>mg
             </p>
             <p>
-              콜레스테롤: <b>50</b>/<b>{nutrients.cholesterol}</b>mg | 당: <b>50</b>/<b>{nutrients.sugar}</b>g
+              콜레스테롤: <b>50</b>/<b>{Math.round(nutrients.cholesterol)}</b>mg | 당: <b>50</b>/<b>{Math.round(nutrients.sugar)}</b>g
             </p>
           </>
         )}
