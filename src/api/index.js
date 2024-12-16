@@ -55,6 +55,10 @@ class Api extends BaseRestApi {
     return this.POST('/foods/class-names', { key: s3Key });
   }
 
+  getChallenges() {
+    return this.GET('/challenges');
+  }
+
   getChallengePresignedUrls() {
     return this.GET('/challenges/presigned-urls');
   }
