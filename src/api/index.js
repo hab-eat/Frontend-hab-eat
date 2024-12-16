@@ -55,6 +55,14 @@ class Api extends BaseRestApi {
     return this.POST('/foods/class-names', { key: s3Key });
   }
 
+  getChallengePresignedUrls() {
+    return this.GET('/challenges/presigned-urls');
+  }
+
+  postChallengeCertifications(id, key) {
+    return this.POST(`/challenges/${id}/certifications`, { key });
+  }
+
   async uploadImageToSignedUrl({ signedUrl, file, type }) {
     return axios
       .put(signedUrl, file, {
