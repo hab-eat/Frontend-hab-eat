@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './UserInfoPage.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Api from '../api';
 
@@ -62,21 +61,21 @@ const UserInfoPage = () => {
       type,
       activityLevel,
     });
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}users/kakao-login`, {
-        snsToken,
-        nickname,
-        height: parseInt(height),
-        weight: parseInt(weight),
-        sex,
-        type,
-        activityLevel,
-      })
-      .then((res) => {
-        console.log('서버 응답:', res.data);
+
+    Api.kakaoSignOrUp({
+      snsToken,
+      nickname,
+      height: parseInt(height),
+      weight: parseInt(weight),
+      sex,
+      type,
+      activityLevel,
+    })
+      .then((data) => {
+        console.log('서버 응답:', data);
 
         // token 추출 및 저장
-        const { token } = res.data;
+        const { token } = data;
         if (token) {
           localStorage.setItem('Back_Token', token); // token을 localStorage에 저장
           console.log('토큰 저장 성공:', token);
@@ -88,18 +87,9 @@ const UserInfoPage = () => {
         navigate('/nutrition'); // NutritionPage로 이동
       })
       .catch((error) => {
-        console.error('사용자 정보 저장 실패:', error);
+        console.log('사용자 정보 저장 실패:', error);
         alert('사용자 정보 저장 실패. 다시 시도해주세요.');
       });
-    // .then((res) => {
-    //   console.log(res.data);
-    //   alert('사용자 정보가 저장되었습니다!');
-    //   navigate('/nutrition'); // NutritionPage로 이동
-    // })
-    // .catch((error) => {
-    //   console.error('사용자 정보 저장 실패:', error);
-    //   alert('사용자 정보 저장 실패. 다시 시도해주세요.');
-    // });
   };
 
   return (

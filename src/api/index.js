@@ -9,8 +9,8 @@ class BaseRestApi {
   });
 
   getRequestConfig() {
-    const token = `Bearer ${localStorage.getItem('Back_Token')}`;
-    return token ? { headers: { Authorization: token } } : undefined;
+    const token = localStorage.getItem('Back_Token');
+    return token ? { headers: { Authorization: `Bearer ${token}` } } : {};
   }
 
   async GET(path, params) {
@@ -39,6 +39,10 @@ class BaseRestApi {
 }
 
 class Api extends BaseRestApi {
+  kakaoSignOrUp(body) {
+    return this.POST('/users/kakao-login', body);
+  }
+
   async uploadImageToSignedUrl({ signedUrl, file, type }) {
     return axios
       .put(signedUrl, file, {
