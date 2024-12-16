@@ -1,8 +1,8 @@
 // 마이페이지, 설정 목록(아이템) 공통 컴포넌트
-import React from "react";
+import React from 'react';
 // import "./MyPage.css";
 
-import "../MyPage.css";
+import '../MyPage.css';
 
 const MyPageItem = ({ icon, text, onClick }) => {
   return (

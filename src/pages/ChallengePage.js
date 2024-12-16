@@ -3,12 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
-import habitIcon from "../img/success-icon.svg";
+import habitIcon from '../img/success-icon.svg';
 import './ChallengePage.css';
-import left from "../img/left.svg";
-import right from "../img/right.svg";
-import medalIcon from "../img/medal.svg";
-import cameraIcon from "../img/greenCamera.svg"
+import left from '../img/left.svg';
+import right from '../img/right.svg';
+import medalIcon from '../img/medal.svg';
+import cameraIcon from '../img/greenCamera.svg';
 import NavigationBar from '../components/NavigationBar';
 
 // Styled Calendar
@@ -131,7 +131,7 @@ const toLocalISOString = (date) => {
 
 // Fetch data from API
 const fetchChallengeData = async (id, startDate, endDate) => {
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
   const TOKEN = process.env.REACT_APP_API_TOKEN;
   console.log(startDate);
   console.log(endDate);
@@ -144,7 +144,7 @@ const fetchChallengeData = async (id, startDate, endDate) => {
         Authorization: `Bearer ${TOKEN}`,
         'Content-Type': 'application/json',
       },
-    }
+    },
   );
   // console.log(response);
   if (!response.ok) throw new Error(`Failed to fetch data: ${response.status}`);
@@ -172,21 +172,23 @@ const ChallengePage = () => {
       try {
         const weeks = getMonthWeeks(month, year);
         // endOfWeek에 시간을 명확히 설정
-        const weeksWithAdjustedTimes = weeks.map(({ startOfWeek, endOfWeek }) => {
-          // endOfWeek를 23:59:59.999로 설정
-          console.log(endOfWeek);
-          endOfWeek.setHours(23, 59, 59, 999);
-          return { startOfWeek, endOfWeek };
-        });
+        const weeksWithAdjustedTimes = weeks.map(
+          ({ startOfWeek, endOfWeek }) => {
+            // endOfWeek를 23:59:59.999로 설정
+            console.log(endOfWeek);
+            endOfWeek.setHours(23, 59, 59, 999);
+            return { startOfWeek, endOfWeek };
+          },
+        );
         const logs = await Promise.all(
           weeksWithAdjustedTimes.map(({ startOfWeek, endOfWeek }) =>
             fetchChallengeData(
               challengeId,
               startOfWeek.toISOString().split('T')[0],
               // endOfWeek.toISOString()
-              toLocalISOString(endOfWeek) // 종료 날짜 (로컬 기준)
-            )
-          )
+              toLocalISOString(endOfWeek), // 종료 날짜 (로컬 기준)
+            ),
+          ),
         );
 
         const newLogMap = {};
@@ -219,12 +221,12 @@ const ChallengePage = () => {
             fetchChallengeData(
               challengeId,
               startOfWeek.toISOString().split('T')[0],
-              endOfWeek.toISOString().split('T')[0]
-            )
-          )
+              endOfWeek.toISOString().split('T')[0],
+            ),
+          ),
         );
         console.log(logs);
-  
+
         const newWeekStatusMap = {}; // 주차별 status 저장
         logs.flat().forEach((weekLog) => {
           if (weekLog && weekLog.status) {
@@ -232,7 +234,7 @@ const ChallengePage = () => {
             newWeekStatusMap[startOfWeekKey] = weekLog.status; // 주차 상태 저장 (true/false)
           }
         });
-  
+
         setWeekStatusMap(newWeekStatusMap); // 주차별 status 상태 저장
       } catch (err) {
         setError(err.message);
@@ -240,13 +242,12 @@ const ChallengePage = () => {
         setLoading(false);
       }
     };
-  
+
     fetchLogs();
   }, [challengeId, month, year]);
-  
+
   if (loading) return <p>LoadingPage</p>;
   if (error) return <p>Error: {error}</p>;
-  
 
   const formatDateKey = (date) => {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
@@ -256,16 +257,16 @@ const ChallengePage = () => {
     if (date.getDay() === 1) {
       const startOfWeek = new Date(date);
       startOfWeek.setDate(date.getDate() - date.getDay() + 1); // 주의 월요일로 설정
-    
+
       const startOfWeekKey = formatDateKey(startOfWeek); // 주차 시작 날짜를 키로 생성
       if (weekStatusMap[startOfWeekKey]) {
-        return <img src={medalIcon} alt="Completed"/>;
+        return <img src={medalIcon} alt="Completed" />;
       }
       return null;
     }
     const dateKey = formatDateKey(date);
     if (logMap[dateKey]) {
-      return <img src={habitIcon} alt="Challenge Completed"/>;
+      return <img src={habitIcon} alt="Challenge Completed" />;
     }
     return null;
   };
@@ -276,7 +277,7 @@ const ChallengePage = () => {
     const file = event.target.files[0];
     // if (file) alert(`사진이 선택되었습니다: ${file.name}`);
     if (file) {
-      navigate(`/challenge/camera`, { state : {file, id} });
+      navigate(`/challenge/camera`, { state: { file, id } });
     }
   };
 
@@ -289,18 +290,45 @@ const ChallengePage = () => {
         <div className="manage">
           <div className="custom-header">
             <div className="month">
-              <button onClick={() => setActiveStartDate(new Date(activeStartDate.setMonth(activeStartDate.getMonth() - 1)))} className="nav-button">
-                <img src={left} alt="prev" /> 
+              <button
+                onClick={() =>
+                  setActiveStartDate(
+                    new Date(
+                      activeStartDate.setMonth(activeStartDate.getMonth() - 1),
+                    ),
+                  )
+                }
+                className="nav-button"
+              >
+                <img src={left} alt="prev" />
               </button>
-              <span className="month-label">{activeStartDate.getMonth() + 1}월</span>
-              <button onClick={() => setActiveStartDate(new Date(activeStartDate.setMonth(activeStartDate.getMonth() + 1)))} className="nav-button">
+              <span className="month-label">
+                {activeStartDate.getMonth() + 1}월
+              </span>
+              <button
+                onClick={() =>
+                  setActiveStartDate(
+                    new Date(
+                      activeStartDate.setMonth(activeStartDate.getMonth() + 1),
+                    ),
+                  )
+                }
+                className="nav-button"
+              >
                 <img src={right} alt="next" />
               </button>
             </div>
             <button className="camera-button" onClick={handleCameraClick}>
               <img src={cameraIcon} alt="camera"></img>
             </button>
-            <input type="file" accept="image/*" capture="camera" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange} />
+            <input
+              type="file"
+              accept="image/*"
+              capture="camera"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
           </div>
           <StyledCalendar
             locale="en-GB"

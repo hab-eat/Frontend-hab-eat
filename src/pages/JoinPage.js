@@ -7,8 +7,7 @@
 // const JoinPage = () => {
 //   const navigate = useNavigate();
 //   const location = useLocation();
-  
-  
+
 //   // HabitPage에서 navigate 시 state로 전달한 id 받아오기
 //   const { id } = location.state || {};
 // //   console.log(id);
@@ -52,16 +51,16 @@
 //         </div>
 //       <div className='section'>
 //         <p className='goal'>일주일 동안 며칠을 목표로 하시나요?</p>
-//         <input 
-//         type="number" 
-//         min="1" 
-//         max="7" 
-//         value={goalDays} 
-//         onChange={handleInputChange} 
-//         placeholder="1~7일" 
+//         <input
+//         type="number"
+//         min="1"
+//         max="7"
+//         value={goalDays}
+//         onChange={handleInputChange}
+//         placeholder="1~7일"
 //       />
 //       </div>
-      
+
 //       {/* <p>챌린지 ID: {id}</p> */}
 //       <button onClick={() => handleComplete(id)}>완료</button>
 //     </div>

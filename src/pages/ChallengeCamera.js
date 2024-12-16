@@ -1,26 +1,24 @@
 // 개인정보 처리 방침 페이지
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_BAEKEND_URL;
 const TOKEN = process.env.REACT_APP_API_TOKEN;
 
 const ChallengeCamera = () => {
-
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const file = location.state?.file;
   const id = location.state?.id;
   const [loading, setLoading] = useState(false); // 로딩 상태
   // const [result, setResult] = useState(null); // 분석 결과 저장
   // const [error, setError] = useState(null);
-  
 
   useEffect(() => {
     // 이미지 분석 시작
     const analyze = async () => {
       if (!file) {
-        alert("파일이 없습니다.");
+        alert('파일이 없습니다.');
         return;
       }
 
@@ -28,10 +26,10 @@ const ChallengeCamera = () => {
 
       try {
         // Presigned URL 가져오기
-        const { url , key } = await fetchPresignedUrl(file.name, file.type);
-        console.log("presignedUrl:", url);
-        console.log("key:", key);
-        
+        const { url, key } = await fetchPresignedUrl(file.name, file.type);
+        console.log('presignedUrl:', url);
+        console.log('key:', key);
+
         //AI 모델 호출
         const analysisResult = await analyzeImage(key, id);
         console.log(analysisResult);
@@ -45,8 +43,8 @@ const ChallengeCamera = () => {
         // Step 5: 챌린지 페이지로 이동
         navigate(`/challenge`, { state: { challengeId: id, month, year } });
       } catch (error) {
-        console.error("이미지 분석 중 오류 발생:", error);
-        alert("이미지 분석 중 오류가 발생했습니다.");
+        console.error('이미지 분석 중 오류 발생:', error);
+        alert('이미지 분석 중 오류가 발생했습니다.');
         navigate(`/challenge`); // 오류 발생 시에도 챌린지 페이지로 이동
       }
     };
@@ -66,18 +64,14 @@ const ChallengeCamera = () => {
 
 export default ChallengeCamera;
 
-
-const fetchPresignedUrl = async ( ) => {
-  const response = await fetch(
-    `${API_URL}challenges/presigned-urls`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+const fetchPresignedUrl = async () => {
+  const response = await fetch(`${API_URL}challenges/presigned-urls`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+  });
   if (!response.ok) {
     throw new Error('Presigned URL 요청 실패');
   }

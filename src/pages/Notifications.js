@@ -1,19 +1,19 @@
 // 알림 설정 페이지
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 // import back from "./back.svg";
-import "./Settings.css";
+import './Settings.css';
 
-import back from "../img/back.svg";
+import back from '../img/back.svg';
 // import "../css/Settings.css";
-import ToggleSwitch from "./elements/ToggleSwitch";
+import ToggleSwitch from './elements/ToggleSwitch';
 
 export const Notifications = () => {
   const navigate = useNavigate();
 
   // 토글 변경 시 상태 처리 (필요하면 추가 작업 가능)
   const handleToggleChange = (isToggled) => {
-    console.log("토글 상태:", isToggled);
+    console.log('토글 상태:', isToggled);
   };
 
   return (

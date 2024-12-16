@@ -93,7 +93,7 @@
 //       />
 //       <p className="subtitle">여러분의 식단, 같이 찍어봐요!</p>
 //       <div className="button-container">
-//         <button className="login-button kakao" onClick={handleKakaoLogin}> 
+//         <button className="login-button kakao" onClick={handleKakaoLogin}>
 //           카카오로 시작하기
 //         </button>
 //       </div>
@@ -114,8 +114,8 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => { 
-    console.log('use effect')
+  useEffect(() => {
+    console.log('use effect');
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
       // 1. 카카오 서버에 인가 코드로 액세스 토큰 요청
@@ -131,10 +131,10 @@ const LoginPage = () => {
         })
         .then((response) => {
           const { access_token } = response.data;
-          console.log('kakao server response')
-          console.log(response.data)
+          console.log('kakao server response');
+          console.log(response.data);
           localStorage.setItem('snsToken', access_token); // 토큰을 로컬 스토리지에 저장
-          console.log("로그인 성공")
+          console.log('로그인 성공');
           navigate('/userinfo'); // UserInfoPage로 이동
         })
         .catch((error) => {
