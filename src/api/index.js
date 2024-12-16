@@ -1,15 +1,12 @@
 import axios from 'axios';
 import qs from 'qs';
-import { addAxiosDateTransformer } from 'axios-date-transformer';
 
 class BaseRestApi {
-  _instance = axios.create({
+  instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
     withCredentials: true,
     paramsSerializer: (params) => qs.stringify(params),
   });
-
-  instance = addAxiosDateTransformer(this._instance);
 
   getRequestConfig() {
     const token = `Bearer ${localStorage.getItem('Back_Token')}`;
@@ -50,6 +47,22 @@ class Api extends BaseRestApi {
         },
       })
       .then((response) => response.data);
+  }
+
+  async getKakaoAccessToken(code) {
+    console.log('getKakaoAccessToken');
+    const redirectUrl = process.env.REACT_APP_KAKAO_REDIRECT_URL; // 카카오 개발자 콘솔에 등록된 Redirect URI
+    const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY; // 카카오 REST API 키
+
+    return axios.post('https://kauth.kakao.com/oauth/token', null, {
+      // headers: { 'Content-Type': 'application/json' },
+      params: {
+        grant_type: 'authorization_code',
+        client_id: Rest_api_key,
+        redirect_uri: redirectUrl,
+        code,
+      },
+    });
   }
 }
 
