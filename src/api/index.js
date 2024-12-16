@@ -43,6 +43,10 @@ class Api extends BaseRestApi {
     return this.POST('/users/kakao-login', body);
   }
 
+  getTargetNutrients() {
+    return this.GET('/users/target-nutrients');
+  }
+
   getFoodPresignedUrls() {
     return this.GET('/foods/presigned-urls');
   }
