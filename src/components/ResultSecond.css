@@ -1,0 +1,94 @@
+/* 화면 전체 컨테이너 */
+.result-second-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #00CBA6, #0086D3);
+    color: white;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+/* 화면 전체 어두운 레이어 */
+.result-second-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* 컨텐츠 */
+.result-second-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.result-second-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    animation: fadeIn 1.5s ease-in-out infinite alternate;
+}
+
+.result-second-food-name {
+    font-size: 32px;
+    margin-bottom: 3px;
+    animation: fadeIn 1.5s ease-in-out infinite alternate;
+    
+}
+.result-second-food-name span {
+    color: yellow; /* foodName에만 노란색 적용 */
+  }
+
+.result-second-image-container {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.result-second-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+    filter: brightness(0.5);
+}
+
+/* 선택 버튼 컨테이너 */
+.result-second-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* 버튼 스타일 */
+.result-second-button {
+    background: transparent; /* 버튼 배경 투명 */
+    border: none; /* 경계선 제거 */
+    font-size: 18px;
+    font-weight: bold;
+    color: white; /* 글자 흰색 */
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+/* 버튼 간 구분선 */
+.result-second-divider {
+    width: 1px;
+    height: 20px; /* 세로 구분선 높이 */
+    background-color: white;
+    margin: 0 10px; /* 버튼 간 간격 */
+}

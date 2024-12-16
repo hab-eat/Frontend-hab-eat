@@ -1,16 +1,16 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import './ResultPage.css';
 
-const ResultPage = () => {
-  const location = useLocation();
-  const { name } = location.state || {}; // 분석 결과 받기
-
+const ResultPage = ({ foodName, imageUrl,comment }) => {
   return (
     <div className="result-container">
-      <h1>음식 판별 결과</h1>
-      <p>
-        판별된 음식: <strong>{name || '결과 없음'}</strong>
-      </p>
+      <h1 className="result-title">{comment}</h1>
+      <h2 className="result-food-name">
+        <span>{foodName}</span>입니다!
+      </h2>
+      <div className="result-image-container">
+        <img src={"/folder.png"} alt={`${foodName} 이미지`} className="result-image" />
+      </div>
     </div>
   );
 };
