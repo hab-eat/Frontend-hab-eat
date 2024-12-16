@@ -65,6 +65,8 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import HabitPage from './pages/HabitPage';
 import ChallengePage from './pages/ChallengePage';
 import ChallengeCamera from './pages/ChallengeCamera';
+import SuccessPage from './pages/SuccessPage';
+import RetryPage from './pages/RetryPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 여부 상태
@@ -112,6 +114,8 @@ const App = () => {
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/challenge" element={<ChallengePage />} />
           <Route path="/challenge/camera" element={<ChallengeCamera />} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/retry" element={<RetryPage />} />
         </Routes>
         {isAuthenticated && <NavigationBar />}{' '}
         {/* 로그인 후에만 네비게이션 바 표시 */}

@@ -40,33 +40,30 @@ const ChallengeCamera = () => {
         const analysisResult = await analyzeImage(key, id);
         console.log(analysisResult);
 
-      
-        // 결과 처리
-        // setResult(analysisResult); // 분석 결과 저장
+        // navigate('/success', { state: { analysisResult, id } });
+        navigate('/retry', { state: { challengeId: id, analysisResult, month, year} });
 
         // Step 5: 챌린지 페이지로 이동
-        navigate(`/challenge`, { state: { challengeId: id, month, year } });
+        // navigate(`/challenge`, { state: { challengeId: id, month, year } });
       } catch (error) {
-        if (error.response && error.response.status === 400) {
-          // 400 Bad Request 처리
-          alert('잘못된 요청입니다. 이미지 형식이나 크기를 확인하세요.');
-          navigate(`/retry`, { state: { challengeId: id, month, year } }); // 재도전 페이지로 이동
-        } else {
-          // 기타 에러 처리
-          alert('이미지 분석 중 오류가 발생했습니다.');
-          navigate(`/challenge`, { state: { challengeId: id, month, year } });
-        }
+        console.error('오류 발생:', error);
+
+      // 업로드 실패 또는 분석 실패 시 재도전 페이지로 이동
+        navigate('/retry', { state: { challengeId: id, month, year, error } });
+      } finally {
+        setLoading(false); // 로딩 종료
       }
     };
 
     analyze();
-  }, [file]); // file이 변경될 때만 실행
+  // }, [file]); // file이 변경될 때만 실행
+  }, [file, id, month, year, navigate]); // 의존성 배열 수정
 
   if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="div">
+    <div className="div" style={{ background: 'linear-gradient(172deg, #00CBA6 10.22%, #00CBA6 40.85%, #0086D3 89.78%)'}}>
       <h1>로딩 중...</h1>
     </div>
   );
