@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import NavigationBar from '../components/NavigationBar'; // 네비게이션 바 컴포넌트 가져오기
 import LoadingPage from '../pages/LoadingPage';
+import NutritionCarmera from '../components/NutritionCarmera';
 
 const NutritionPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -146,7 +147,9 @@ const NutritionPage = () => {
           </div>
         ))}
       </div>
-      <NavigationBar setLoading={setLoading} />
+      <NavigationBar
+        CarmeraElement={<NutritionCarmera setLoading={setLoading} />}
+      />
     </div>
   );
 };
