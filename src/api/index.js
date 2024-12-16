@@ -71,6 +71,12 @@ class Api extends BaseRestApi {
     return this.POST(`challenges/${id}/participants`, { goalDays });
   }
 
+  getChallengeCertificationLogs({ id, startDate, endDate }) {
+    return this.GET(
+      `/challenges/${id}/certification-logs?startDate=${startDate}&endDate=${endDate}`,
+    );
+  }
+
   async uploadImageToSignedUrl({ signedUrl, file, type }) {
     return axios
       .put(signedUrl, file, {
