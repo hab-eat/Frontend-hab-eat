@@ -1,0 +1,32 @@
+/* 달력 버튼 */
+.calendar-section {
+  position: absolute; /* 부모 컨테이너 기준 위치 설정 */
+  top: 1px; /* 화면 상단 여백 */
+  right: 10px; /* 화면 오른쪽 여백 */
+  display: flex; /* 버튼과 날짜를 가로로 배치 */
+  align-items: center; /* 수직 가운데 정렬 */
+  gap: 8px; /* 버튼과 날짜 사이의 간격 */
+  white-space: nowrap;
+}
+.selected-date {
+  font-size: 16px; /* 폰트 크기 조정 */
+  font-weight: 600; /* 텍스트 굵기 */
+  width: 84px;
+  font-size: 16px;
+  color: #141414;
+  text-align: left;
+}
+/*캘린더 버튼*/
+.calendar-button {
+  background-color: #f5f5f5;
+  color: #00c5a1;
+  border-color: #00c5a1;
+  border-radius: 30px;
+  padding: 10px 15px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.calendar-button:hover {
+  background-color: #00c5a1;
+}
