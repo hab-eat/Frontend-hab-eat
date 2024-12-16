@@ -68,7 +68,7 @@ class Api extends BaseRestApi {
   }
 
   postChallengeParticipants(id, goalDays) {
-    return this.POST(`challenges/${id}/participants`, { goalDays });
+    return this.POST(`/challenges/${id}/participants`, { goalDays });
   }
 
   getChallengeCertificationLogs({ id, startDate, endDate }) {
