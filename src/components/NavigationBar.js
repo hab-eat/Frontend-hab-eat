@@ -1,9 +1,8 @@
 import React, { useRef, useState } from 'react';
 import './NavigationBar.css';
 
-const NavigationBar = () => {
+const NavigationBar = ({ setLoading }) => {
   const fileInputRef = useRef(null);
-  const [loading, setLoading] = useState(false); // 로딩 상태
   const [result, setResult] = useState(null); // 결과 상태
 
   const handleCameraClick = () => {
@@ -70,87 +69,55 @@ const NavigationBar = () => {
         const { name } = await imageNameResponse.json();
         console.log('Fetched image name:', name);
 
-        setResult(name); // 결과 저장
-        setLoading(false); // 로딩 종료
+        setLoading(false);
+        setResult(name);
       } catch (error) {
         console.error('Error during image upload flow:', error);
-        setLoading(false); // 로딩 종료
+        setLoading(false);
         alert('사진 업로드 중 문제가 발생했습니다. 다시 시도해주세요.');
       }
     }
   };
 
   return (
-    <div>
-      {/* 로딩 화면 */}
-      {loading ? (
-        <div className="loading-container">
-          <h1>분석 중...</h1>
-          <p>잠시만 기다려주세요</p>
+    <div className="navigation-bar">
+      {/* 왼쪽 섹션: 식단, 습관 */}
+      <div className="nav-left">
+        <div className="nav-item">
+          <img src="/nutrition-icon.png" alt="식단" className="nav-icon" />
+          <span className="nav-label">식단</span>
         </div>
-      ) : result ? (
-        // 결과 화면
-        <div className="result-container">
-          <h1>음식 판별 결과</h1>
-          <p>
-            판별된 음식: <strong>{result}</strong>
-          </p>
+        <div className="nav-item">
+          <img src="/habit-icon.png" alt="습관" className="nav-icon" />
+          <span className="nav-label">습관</span>
         </div>
-      ) : (
-        // 네비게이션 바
-        <div className="navigation-bar">
-          {/* 왼쪽 섹션: 식단, 습관 */}
-          <div className="nav-left">
-            <div className="nav-item">
-              <img src="/nutrition-icon.png" alt="식단" className="nav-icon" />
-              <span className="nav-label">식단</span>
-            </div>
-            <div className="nav-item">
-              <img src="/habit-icon.png" alt="습관" className="nav-icon" />
-              <span className="nav-label">습관</span>
-            </div>
-          </div>
+      </div>
 
-          {/* 중앙 섹션: 카메라 */}
-          <div className="nav-center">
-            <button className="camera-button" onClick={handleCameraClick}>
-              <img
-                src="/camera-icon.png"
-                alt="카메라"
-                className="camera-icon"
-              />
-            </button>
-            <input
-              type="file"
-              accept="image/*"
-              capture="camera" // 카메라 호출
-              style={{ display: 'none' }} // 숨겨진 input
-              ref={fileInputRef}
-              onChange={handleFileChange}
-            />
-          </div>
+      <div className="nav-center">
+        <button className="camera-button" onClick={handleCameraClick}>
+          <img src="/camera-icon.png" alt="카메라" className="camera-icon" />
+        </button>
+        <input
+          type="file"
+          accept="image/*"
+          capture="camera" // 카메라 호출
+          style={{ display: 'none' }} // 숨겨진 input
+          ref={fileInputRef}
+          onChange={handleFileChange}
+        />
+      </div>
 
-          {/* 오른쪽 섹션: 마이페이지 */}
-          <div className="nav-right">
-            <div className="nav-item">
-              <img
-                src="/mypage-icon.png"
-                alt="마이페이지"
-                className="nav-icon"
-              />
-              <span className="nav-label">마이페이지</span>
-            </div>
-            <div className="nav-item">
-              <img
-                src="/contact-icon.png"
-                alt="문의하기"
-                className="nav-icon"
-              />
-              <span className="nav-label">문의</span>
-            </div>
-          </div>
+      {/* 오른쪽 섹션: 마이페이지 */}
+      <div className="nav-right">
+        <div className="nav-item">
+          <img src="/mypage-icon.png" alt="마이페이지" className="nav-icon" />
+          <span className="nav-label">마이페이지</span>
         </div>
-      )}
+        <div className="nav-item">
+          <img src="/contact-icon.png" alt="문의하기" className="nav-icon" />
+          <span className="nav-label">문의</span>
+        </div>
+      </div>
     </div>
   );
 };

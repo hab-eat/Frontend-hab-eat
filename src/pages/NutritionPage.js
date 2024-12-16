@@ -3,6 +3,7 @@ import './NutritionPage.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import NavigationBar from '../components/NavigationBar'; // 네비게이션 바 컴포넌트 가져오기
+import LoadingPage from '../pages/LoadingPage';
 
 const NutritionPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -12,6 +13,7 @@ const NutritionPage = () => {
     lunch: ['샐러드'],
     dinner: [],
   });
+  const [isLoading, setLoading] = useState(false);
 
   const [nutrients, setNutrients] = useState({
     kcal: 0,
@@ -70,7 +72,9 @@ const NutritionPage = () => {
     fetchNutrientData();
   }, []);
 
-  return (
+  return isLoading ? (
+    <LoadingPage />
+  ) : (
     <div className="nutrition-container">
       {/* 달력 버튼 */}
       <div className="calendar-section">
@@ -142,9 +146,7 @@ const NutritionPage = () => {
           </div>
         ))}
       </div>
-
-      {/* 네비게이션 바 */}
-      <NavigationBar />
+      <NavigationBar setLoading={setLoading} />
     </div>
   );
 };
