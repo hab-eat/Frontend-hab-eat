@@ -104,8 +104,8 @@
 // export default LoginPage;
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './LoginPage.css';
+import Api from '../api';
 
 const LoginPage = () => {
   const redirectUrl = process.env.REACT_APP_KAKAO_REDIRECT_URL; // 카카오 개발자 콘솔에 등록된 Redirect URI
@@ -119,16 +119,7 @@ const LoginPage = () => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
       // 1. 카카오 서버에 인가 코드로 액세스 토큰 요청
-      axios
-        .post('https://kauth.kakao.com/oauth/token', null, {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          params: {
-            grant_type: 'authorization_code',
-            client_id: Rest_api_key,
-            redirect_uri: redirectUrl,
-            code,
-          },
-        })
+      Api.getKakaoAccessToken(code)
         .then((response) => {
           const { access_token } = response.data;
           console.log('kakao server response');
