@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import './NutritionCarmera.css';
+import Api from '../api';
 
 const NutritionCarmera = ({ setLoading }) => {
   const fileInputRef = useRef(null);
@@ -16,56 +17,22 @@ const NutritionCarmera = ({ setLoading }) => {
 
       try {
         // Step 1: foods/presigned-urls 호출
-        const presignedResponse = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}foods/presigned-urls`,
-          {
-            method: 'GET',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('Back_Token')}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-
-        if (!presignedResponse.ok) {
-          throw new Error('Failed to get presigned URL');
-        }
-
-        const urls = await presignedResponse.json();
+        const urls = await Api.getFoodPresignedUrls();
         const { url, key } = urls[0];
         console.log('Presigned URL and Key:', { url, key });
 
         // Step 2: S3로 사진 업로드
-        await fetch(url, {
-          method: 'PUT',
-          mode: 'cors',
-          headers: {
-            'Content-Type': file.type,
-          },
-          body: file,
+        await Api.uploadImageToSignedUrl({
+          signedUrl: url,
+          file,
+          type: file.type,
         });
+
         console.log('Image uploaded to S3 successfully');
 
         // Step 3: foods/get-image-name 호출
-        const imageNameResponse = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}foods/class-names`,
-          {
-            method: 'POST',
-            headers: {
-              authorization: `Bearer ${localStorage.getItem('Back_Token')}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ key }),
-          },
-        );
 
-        if (!imageNameResponse.ok) {
-          throw new Error(
-            `Failed to fetch image name: ${imageNameResponse.status}`,
-          );
-        }
-
-        const { name } = await imageNameResponse.json();
+        const { name } = await Api.getFoodClassName(key);
         console.log('Fetched image name:', name);
 
         setLoading(false);

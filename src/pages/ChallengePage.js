@@ -10,6 +10,7 @@ import right from '../img/right.svg';
 import medalIcon from '../img/medal.svg';
 import cameraIcon from '../img/greenCamera.svg';
 import NavigationBar from '../components/NavigationBar';
+import Api from '../api';
 
 // Styled Calendar
 const StyledCalendar = styled(Calendar)`
@@ -20,7 +21,7 @@ const StyledCalendar = styled(Calendar)`
 
   .react-calendar__tile {
     background-color: #fdfdfd;
-    color: #8E8E8E;
+    color: #8e8e8e;
     height: 70px;
     display: flex;
     flex-direction: column;
@@ -33,7 +34,7 @@ const StyledCalendar = styled(Calendar)`
 
   .react-calendar__tile--now {
     background-color: #c5f5d1;
-    border: 1px soild #00C5A1
+    border: 1px soild #00c5a1;
     font-weight: bold;
     color: #000;
   }
@@ -47,7 +48,7 @@ const StyledCalendar = styled(Calendar)`
 
   .react-calendar__navigation {
     display: flex;
-    background-color: #00C5A1;
+    background-color: #00c5a1;
     color: white;
   }
 
@@ -131,24 +132,10 @@ const toLocalISOString = (date) => {
 
 // Fetch data from API
 const fetchChallengeData = async (id, startDate, endDate) => {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  const TOKEN = process.env.REACT_APP_API_TOKEN;
   console.log(startDate);
   console.log(endDate);
 
-  const response = await fetch(
-    `${API_URL}challenges/${id}/certification-logs?startDate=${startDate}&endDate=${endDate}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  // console.log(response);
-  if (!response.ok) throw new Error(`Failed to fetch data: ${response.status}`);
-  return response.json();
+  return Api.getChallengeCertificationLogs({ id, startDate, endDate });
 };
 
 const ChallengePage = () => {

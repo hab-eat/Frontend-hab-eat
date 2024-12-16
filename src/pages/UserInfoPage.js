@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './UserInfoPage.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Api from '../api';
 
 const UserInfoPage = () => {
-  const redirectUrl = process.env.REACT_APP_KAKAO_REDIRECT_URL; // 카카오 개발자 콘솔에 등록된 Redirect URI
-  const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY; // 카카오 REST API 키
-  const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${Rest_api_key}&redirect_uri=${redirectUrl}&response_type=code`;
   const [formData, setFormData] = useState({
     nickname: '',
     height: '',
@@ -23,16 +20,7 @@ const UserInfoPage = () => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
       // 1. 카카오 서버에 인가 코드로 액세스 토큰 요청
-      axios
-        .post('https://kauth.kakao.com/oauth/token', null, {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          params: {
-            grant_type: 'authorization_code',
-            client_id: Rest_api_key,
-            redirect_uri: redirectUrl,
-            code,
-          },
-        })
+      Api.getKakaoAccessToken(code)
         .then((response) => {
           const { access_token } = response.data;
           console.log('kakao server response');
@@ -73,21 +61,21 @@ const UserInfoPage = () => {
       type,
       activityLevel,
     });
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}users/kakao-login`, {
-        snsToken,
-        nickname,
-        height: parseInt(height),
-        weight: parseInt(weight),
-        sex,
-        type,
-        activityLevel,
-      })
-      .then((res) => {
-        console.log('서버 응답:', res.data);
+
+    Api.kakaoSignOrUp({
+      snsToken,
+      nickname,
+      height: parseInt(height),
+      weight: parseInt(weight),
+      sex,
+      type,
+      activityLevel,
+    })
+      .then((data) => {
+        console.log('서버 응답:', data);
 
         // token 추출 및 저장
-        const { token } = res.data;
+        const { token } = data;
         if (token) {
           localStorage.setItem('Back_Token', token); // token을 localStorage에 저장
           console.log('토큰 저장 성공:', token);
@@ -99,18 +87,9 @@ const UserInfoPage = () => {
         navigate('/nutrition'); // NutritionPage로 이동
       })
       .catch((error) => {
-        console.error('사용자 정보 저장 실패:', error);
+        console.log('사용자 정보 저장 실패:', error);
         alert('사용자 정보 저장 실패. 다시 시도해주세요.');
       });
-    // .then((res) => {
-    //   console.log(res.data);
-    //   alert('사용자 정보가 저장되었습니다!');
-    //   navigate('/nutrition'); // NutritionPage로 이동
-    // })
-    // .catch((error) => {
-    //   console.error('사용자 정보 저장 실패:', error);
-    //   alert('사용자 정보 저장 실패. 다시 시도해주세요.');
-    // });
   };
 
   return (

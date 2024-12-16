@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './NutritionInfo.css';
 
+import Api from '../api';
 const NutritionInfo = () => {
   const [nutrients, setNutrients] = useState({
     kcal: 0,
@@ -15,32 +16,9 @@ const NutritionInfo = () => {
   const [error, setError] = useState('');
 
   const fetchNutrientData = async () => {
-    const apiUrl = `${process.env.REACT_APP_BACKEND_URL}users/target-nutrients`; // Ensure this URL is correct
-    console.log('Request URL:', apiUrl);
-
     try {
-      const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('Back_Token')}`, // 토큰 추가
-        },
-      });
-
-      console.log('Response Status:', response.status);
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Response Data:', data);
-        setNutrients(data); // 데이터 상태 업데이트
-      } else {
-        // 서버에서 응답은 있지만 에러 코드가 있을 때
-        const errorData = await response.json();
-        console.error('API Error Response:', errorData);
-        throw new Error(
-          `Server Error: ${errorData.message || 'Unknown error'}`,
-        );
-      }
+      const data = await Api.getTargetNutrients();
+      setNutrients(data);
     } catch (err) {
       setError(err.message);
       console.error('영양 정보 가져오기 실패:', err);

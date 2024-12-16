@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LoadingPage from '../pages/LoadingPage';
+import Api from '../api';
 
 const API_URL = process.env.REACT_APP_BAEKEND_URL;
 const TOKEN = process.env.REACT_APP_API_TOKEN;
@@ -29,9 +30,15 @@ const ChallengeCamera = () => {
         console.log('presignedUrl:', url);
         console.log('key:', key);
 
+        await Api.uploadImageToSignedUrl({
+          signedUrl: url,
+          file,
+          type: file.type,
+        });
+
         //AI 모델 호출
-        const analysisResult = await analyzeImage(key, id);
-        console.log(analysisResult);
+        const analysisResult = await certifyChallengeImage(id, key);
+        console.log({ analysisResult });
 
         // 결과 처리
         // setResult(analysisResult); // 분석 결과 저장
@@ -43,13 +50,14 @@ const ChallengeCamera = () => {
         navigate(`/challenge`, { state: { challengeId: id, month, year } });
       } catch (error) {
         console.error('이미지 분석 중 오류 발생:', error);
+        console.log(error);
         alert('이미지 분석 중 오류가 발생했습니다.');
-        navigate(`/challenge`); // 오류 발생 시에도 챌린지 페이지로 이동
+        return navigate(`/challenge`); // 오류 발생 시에도 챌린지 페이지로 이동
       }
     };
 
     analyze();
-  }, [file]); // file이 변경될 때만 실행
+  }, [file, id, navigate]); // file이 변경될 때만 실행
 
   if (loading) return <LoadingPage />;
   return (
@@ -62,17 +70,7 @@ const ChallengeCamera = () => {
 export default ChallengeCamera;
 
 const fetchPresignedUrl = async () => {
-  const response = await fetch(`${API_URL}challenges/presigned-urls`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-      'Content-Type': 'application/json',
-    },
-  });
-  if (!response.ok) {
-    throw new Error('Presigned URL 요청 실패');
-  }
-  const data = await response.json(); // 서버에서 presigned URL과 key 반환
+  const data = await Api.getChallengePresignedUrls();
 
   // 배열 형태로 응답이 오는 경우
   if (Array.isArray(data) && data.length > 0) {
@@ -83,20 +81,6 @@ const fetchPresignedUrl = async () => {
   }
 };
 
-const analyzeImage = async (key, id) => {
-  const response = await fetch(`${API_URL}challenges/${id}/certifications`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ key }),
-  });
-
-  if (!response.ok) {
-    throw new Error('이미지 분석 요청 실패');
-  }
-
-  const result = await response.json();
-  return result;
+const certifyChallengeImage = async (id, key) => {
+  return Api.postChallengeCertifications(id, key);
 };
