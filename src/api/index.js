@@ -67,6 +67,10 @@ class Api extends BaseRestApi {
     return this.POST(`/challenges/${id}/certifications`, { key });
   }
 
+  postChallengeParticipants(id, goalDays) {
+    return this.POST(`challenges/${id}/participants`, { goalDays });
+  }
+
   async uploadImageToSignedUrl({ signedUrl, file, type }) {
     return axios
       .put(signedUrl, file, {

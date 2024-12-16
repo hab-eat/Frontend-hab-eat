@@ -116,42 +116,32 @@ export const HabitPage = () => {
       // console.log(startDate);
       console.log(requestBody);
 
-      // try {
-      //   const token = `${TOKEN}`; // 환경 변수에서 토큰 가져오기
-      //   const response = await fetch(`${API_URL}challenges/${selectedChallenge.id}/participants`, {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       "Authorization": `Bearer ${token}`, // 토큰 포함
-      //     },
-      //     body: JSON.stringify(requestBody), // 요청 데이터
-      //   });
+      try {
+        await Api.postChallengeParticipants(selectedChallenge.id, days);
 
-      //   if (!response.ok) {
-      //     throw new Error(`HTTP error! status: ${response.status}`);
-      //   }
+        // 참여 중 챌린지에 추가
+        setOngoingChallenges((prevOngoingChallenges) => [
+          ...prevOngoingChallenges,
+          {
+            ...selectedChallenge,
+            name: selectedChallenge.title,
+            status: 'participating',
+            days,
+          },
+        ]);
 
-      //   const responseData = await response.json();
-      //   console.log("Challenge participation successful:", responseData);
+        // 참여 가능 챌린지에서 제거
+        setAvailableChallenges((prevAvailableChallenges) =>
+          prevAvailableChallenges.filter(
+            (challenge) => challenge.id !== selectedChallenge.id,
+          ),
+        );
 
-      //   // 참여 중 챌린지에 추가
-      //   setOngoingChallenges((prevOngoingChallenges) => [
-      //     ...prevOngoingChallenges,
-      //     { ...selectedChallenge, name: selectedChallenge.title, status: "participating", days },
-      //   ]);
-
-      //   // 참여 가능 챌린지에서 제거
-      //   setAvailableChallenges((prevAvailableChallenges) =>
-      //     prevAvailableChallenges.filter(
-      //       (challenge) => challenge.id !== selectedChallenge.id
-      //     )
-      //   );
-
-      //   closeModal(); // 모달 닫기
-      // } catch (error) {
-      //   console.error("Error completing challenge:", error);
-      //   alert("챌린지 참여에 실패했습니다. 다시 시도해주세요.");
-      // }
+        closeModal(); // 모달 닫기
+      } catch (error) {
+        console.error('Error completing challenge:', error);
+        alert('챌린지 참여에 실패했습니다. 다시 시도해주세요.');
+      }
     }
   };
 
