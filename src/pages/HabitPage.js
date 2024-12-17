@@ -62,8 +62,9 @@ export const HabitPage = () => {
 
   const openModal = (challenge) => {
     const today = new Date();
-    if (today.getDay() !== 1) {
-      alert("챌린지 참여 신청은 월요일에만 가능합니다.");
+
+    if (process.env.NODE_ENV === 'production' && today.getDay() !== 1) {
+      alert('챌린지 참여 신청은 월요일에만 가능합니다.');
       return;
     }
 
@@ -96,7 +97,6 @@ export const HabitPage = () => {
   //   const ms = String(offsetDate.getUTCMilliseconds()).padStart(3, '0'); // 밀리초
   //   return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}.${ms}`;
   // };
-  
 
   const completeChallenge = async () => {
     if (selectedChallenge) {

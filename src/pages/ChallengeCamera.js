@@ -1,6 +1,6 @@
 // 챌린지 카메라 동작 페이지
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LoadingPage from '../pages/LoadingPage';
 import Api from '../api';
 
@@ -19,43 +19,42 @@ const ChallengeCamera = () => {
   const currentDate = new Date();
   const month = currentDate.getMonth() + 1; // 0-based -> 1-based
   const year = currentDate.getFullYear();
-  
 
   useEffect(() => {
-    // 이미지 분석 시작
     const analyze = async () => {
       if (!file) {
         alert('파일이 없습니다.');
         return;
       }
 
-      setLoading(true); // 로딩 시작
+      setLoading(true);
 
       try {
-        // Presigned URL 가져오기
-        const { url , key } = await fetchPresignedUrl(file.name, file.type);
-        console.log("presignedUrl:", url);
-        console.log("key:", key);
+        const { url, key } = await fetchPresignedUrl(file.name, file.type);
+        console.log('presignedUrl:', url);
+        console.log('key:', key);
 
         await Api.uploadImageToSignedUrl({
           signedUrl: url,
           file,
           type: file.type,
         });
-        
-        //AI 모델 호출
+
         const analysisResult = await certifyChallengeImage(id, key);
-        console.log({ analysisResult });
 
-        // navigate('/success', { state: { analysisResult, id } });
-        navigate('/retry', { state: { challengeId: id, analysisResult, month, year} });
-
-        // Step 5: 챌린지 페이지로 이동
-        // navigate(`/challenge`, { state: { challengeId: id, month, year } });
+        navigate('/success', {
+          state: { analysisResult, challengeId: id, month, year },
+        });
       } catch (error) {
-        console.error("이미지 분석 중 오류 발생:", error);
-        // 업로드 실패 또는 분석 실패 시 재도전 페이지로 이동
-        navigate('/retry', { state: { challengeId: id, month, year, error } });
+        console.log('이미지 분석 중 오류 발생:', error.code);
+
+        let message;
+        if (error.code === 'ERR_BAD_REQUEST') {
+          message = '이미 인증 완료된 챌린지입니다.';
+        }
+        navigate('/retry', {
+          state: { challengeId: id, month, year, message },
+        });
       } finally {
         setLoading(false); // 로딩 종료
       }
@@ -66,7 +65,13 @@ const ChallengeCamera = () => {
 
   if (loading) return <LoadingPage />;
   return (
-    <div className="div" style={{ background: 'linear-gradient(172deg, #00CBA6 10.22%, #00CBA6 40.85%, #0086D3 89.78%)'}}>
+    <div
+      className="div"
+      style={{
+        background:
+          'linear-gradient(172deg, #00CBA6 10.22%, #00CBA6 40.85%, #0086D3 89.78%)',
+      }}
+    >
       <h1>로딩 중...</h1>
     </div>
   );
