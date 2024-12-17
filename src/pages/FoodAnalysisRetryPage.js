@@ -1,7 +1,21 @@
 import React from 'react';
 import './FoodAnalysisCheckPage.css'; // ResultSecond.js 재사용
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const FoodAnalysisRetryPage = ({ foodName, imageUrl, comment }) => {
+const FoodAnalysisRetryPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const foodName = location.state?.foodName || '';
+  const comment = location.state?.comment || 'Hab-eat이 생각한 음식은..';
+
+  const onClickRetryBtn = () => {
+    navigate('/nutrition');
+  };
+
+  const onClickEnterBtn = () => {
+    // TODO: navigate to 자동 완성 페이지
+  };
+
   return (
     <div className="result-second-container">
       <div className="result-second-overlay"></div> {/* 어두운 레이어 */}
@@ -19,7 +33,9 @@ const FoodAnalysisRetryPage = ({ foodName, imageUrl, comment }) => {
           />
         </div>
         <div className="result-second-buttons">
-          <button className="result-second-button">다시 촬영</button>
+          <button className="result-second-button" onClick={onClickRetryBtn}>
+            다시 촬영
+          </button>
           <div className="result-second-divider"></div>
           <button className="result-second-button">직접 입력</button>
         </div>

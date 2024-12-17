@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './FoodAnalysisResultPage.css';
-import { useLocation } from 'react-router-dom';
 
 const FoodAnalysisResultPage = () => {
   const location = useLocation();
-  const foodName = location.state.foodName || '';
-  const comment = location.state.comment || 'Hab-eat이 생각한 음식은..';
+  const navigate = useNavigate();
+  const foodName = location.state?.foodName || '';
+  const comment = location.state?.comment || 'Hab-eat이 생각한 음식은..';
+
+  useEffect(() => {
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    const navigateWithDelay = async (ms, path) => {
+      await sleep(ms);
+      navigate(path, { state: { foodName } });
+    };
+
+    navigateWithDelay(1000, '/analysis/food-image/check');
+  }, [navigate, foodName]);
 
   return (
     <div className="result-container">
