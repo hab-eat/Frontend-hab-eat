@@ -1,0 +1,85 @@
+/* 페이지 컨테이너 */
+.food-selection-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #00CBA6, #0086D3); /* 그라데이션 추가 */
+    font-family: 'Arial', sans-serif;
+    color: white;
+    padding: 20px;
+}
+
+/* 제목 스타일 */
+.food-selection-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 검색창 스타일 */
+.search-input-container {
+    position: relative;
+    width: 80%;
+    max-width: 400px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #00CBA6;
+    border-radius: 5px;
+    outline: none;
+    color: #333;
+}
+
+/* 자동완성 리스트 스타일 */
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.suggestion-item {
+    padding: 10px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background-color: #00CBA6;
+    color: white;
+}
+
+/* 확인 버튼 */
+.confirm-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #00CBA6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+    background-color: #0086D3;
+}
