@@ -68,8 +68,12 @@ const QuantityAdjustPage = () => {
     try {
       const rate = servingSize / amount;
 
+      const dateString = new Date(Date.now() + 9 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 10);
+
       await api.postDiets({
-        date: new Date().toISOString(),
+        date: dateString,
         amount: servingSize,
         kcal: kcal * rate,
         carbohydrate: carbohydrate * rate,
@@ -87,13 +91,17 @@ const QuantityAdjustPage = () => {
         transfat: transfat * rate,
       });
 
-      const kstDate = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString();
-
-      const dietsStats = await api.getDietsStats(kstDate);
-      await api.postNutriChallengeCertifications(dietsStats);
+      const dietsStats = await api.getDietsStats(dateString);
+      await api.postNutriChallengeCertifications({
+        kcal: dietsStats.kcal,
+        carbohydrate: dietsStats.carbohydrate,
+        protein: dietsStats.protein,
+        fat: dietsStats.fat,
+        natrium: dietsStats.natrium,
+        cholesterol: dietsStats.cholesterol,
+        sugar: dietsStats.sugar,
+      });
     } catch (e) {
-      console.log(e);
-      console.log(new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString());
       alert('식단 업로드에 실패했습니다.');
     }
   };

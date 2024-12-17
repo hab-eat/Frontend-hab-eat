@@ -70,7 +70,7 @@ class Api extends BaseRestApi {
   }
 
   getDietsStats(date) {
-    return this.GET(`/diets/?date=${date}`);
+    return this.GET(`/diets/stats/?date=${date}`);
   }
 
   postNutriChallengeCertifications(data) {
