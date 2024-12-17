@@ -1,9 +1,19 @@
 import { useEffect, useState } from 'react';
 import './NutritionInfo.css';
-
 import Api from '../api';
-const NutritionInfo = () => {
-  const [nutrients, setNutrients] = useState({
+
+const NutritionInfo = ({ selectedDate }) => {
+  const [targetNutrients, setTargetNutrients] = useState({
+    kcal: 0,
+    carbohydrate: 0,
+    protein: 0,
+    fat: 0,
+    natrium: 0,
+    cholesterol: 0,
+    sugar: 0,
+  });
+
+  const [dietsStats, setDietsStats] = useState({
     kcal: 0,
     carbohydrate: 0,
     protein: 0,
@@ -17,8 +27,25 @@ const NutritionInfo = () => {
 
   const fetchNutrientData = async () => {
     try {
-      const data = await Api.getTargetNutrients();
-      setNutrients(data);
+      const dateString = selectedDate.toISOString().slice(0, 10);
+      const targetNutrientsRes = await Api.getTargetNutrients();
+      const dietsStatsRes = await Api.getDietsStats(dateString);
+
+      setTargetNutrients(targetNutrientsRes);
+
+      if (!dietsStatsRes) {
+        setDietsStats({
+          kcal: 0,
+          carbohydrate: 0,
+          protein: 0,
+          fat: 0,
+          natrium: 0,
+          cholesterol: 0,
+          sugar: 0,
+        });
+      } else {
+        setDietsStats(dietsStatsRes);
+      }
     } catch (err) {
       setError(err.message);
       console.error('영양 정보 가져오기 실패:', err);
@@ -27,7 +54,7 @@ const NutritionInfo = () => {
 
   useEffect(() => {
     fetchNutrientData();
-  }, []);
+  }, [selectedDate]);
 
   if (error) {
     return <p className="error-message">영양 정보 가져오기 실패: {error}</p>;
@@ -38,19 +65,26 @@ const NutritionInfo = () => {
       {
         <>
           <p>
-            칼로리: <b>1500</b>/<b>{Math.round(nutrients.kcal)}</b> kcal
+            칼로리: <b>{dietsStats.kcal}</b>/
+            <b>{Math.round(targetNutrients.kcal)}</b> kcal
           </p>
           <p>
-            탄수화물: <b>100</b>/<b>{Math.round(nutrients.carbohydrate)}</b>g |
-            단백질: <b>50</b>/<b>{Math.round(nutrients.protein)}</b>g
+            탄수화물: <b>{dietsStats.carbohydrate}</b>/
+            <b>{Math.round(targetNutrients.carbohydrate)}</b>g | 단백질:{' '}
+            <b>{dietsStats.protein}</b>/
+            <b>{Math.round(targetNutrients.protein)}</b>g
           </p>
           <p>
-            지방: <b>20</b>/<b>{Math.round(nutrients.fat)}</b>g | 나트륨:{' '}
-            <b>50</b>/<b>{Math.round(nutrients.natrium)}</b>mg
+            지방: <b>{dietsStats.fat}</b>/
+            <b>{Math.round(targetNutrients.fat)}</b>g | 나트륨:{' '}
+            <b>{dietsStats.natrium}</b>/
+            <b>{Math.round(targetNutrients.natrium)}</b>mg
           </p>
           <p>
-            콜레스테롤: <b>50</b>/<b>{Math.round(nutrients.cholesterol)}</b>mg |
-            당: <b>50</b>/<b>{Math.round(nutrients.sugar)}</b>g
+            콜레스테롤: <b>{dietsStats.cholesterol}</b>/
+            <b>{Math.round(targetNutrients.cholesterol)}</b>mg | 당:{' '}
+            <b>{dietsStats.sugar}</b>/<b>{Math.round(targetNutrients.sugar)}</b>
+            g
           </p>
         </>
       }

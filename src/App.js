@@ -8,7 +8,6 @@ import {
 import LoginPage from './pages/LoginPage';
 import UserInfoPage from './pages/UserInfoPage';
 import NutritionPage from './pages/NutritionPage';
-import NavigationBar from './components/NavigationBar';
 import MyPage from './pages/MyPage';
 import Settings from './pages/Settings';
 import Guide from './pages/Guide';
@@ -17,6 +16,11 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import HabitPage from './pages/HabitPage';
 import ChallengePage from './pages/ChallengePage';
 import ChallengeCamera from './pages/ChallengeCamera';
+import FoodAnalysisResultPage from './pages/FoodAnalysisResultPage';
+import FoodAnalysisCheckPage from './pages/FoodAnalysisCheckPage';
+import FoodAnalysisRetryPage from './pages/FoodAnalysisRetryPage';
+import FoodSelectionPage from './pages/FoodSelectionPage';
+import QuantityAdjustPage from './pages/QuantityAdjustPage';
 import SuccessPage from './pages/SuccessPage';
 import RetryPage from './pages/RetryPage';
 
@@ -66,11 +70,25 @@ const App = () => {
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/challenge" element={<ChallengePage />} />
           <Route path="/challenge/camera" element={<ChallengeCamera />} />
+          <Route
+            path="/analysis/food-image/result"
+            element={<FoodAnalysisResultPage />}
+          />
+          <Route
+            path="/analysis/food-image/check"
+            element={<FoodAnalysisCheckPage />}
+          />
+          <Route
+            path="/analysis/food-image/retry"
+            element={<FoodAnalysisRetryPage />}
+          />
+          <Route path="/food/autocomplete" element={<FoodSelectionPage />} />
+          <Route path="/food/input-form" element={<QuantityAdjustPage />} />
+          <Route path="/challenge/camera" element={<ChallengeCamera />} />
+
           <Route path="/success" element={<SuccessPage />} />
           <Route path="/retry" element={<RetryPage />} />
         </Routes>
-        {isAuthenticated && <NavigationBar />}{' '}
-        {/* 로그인 후에만 네비게이션 바 표시 */}
       </div>
     </Router>
   );

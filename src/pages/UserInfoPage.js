@@ -61,20 +61,6 @@ const UserInfoPage = () => {
       type,
       activityLevel,
     });
-<<<<<<< HEAD
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}users/kakao-login`, {
-        snsToken,
-        nickname,
-        height: parseInt(height),
-        weight: parseInt(weight),
-        sex,
-        type,
-        activityLevel,
-      })
-      .then((res) => {
-        console.log(res.data);
-=======
 
     Api.kakaoSignOrUp({
       snsToken,
@@ -97,7 +83,6 @@ const UserInfoPage = () => {
           console.warn('응답에 토큰이 없습니다.');
         }
 
->>>>>>> 4e7fc5aa9ed55c93f24887d8a95f22db4987ec43
         alert('사용자 정보가 저장되었습니다!');
         navigate('/nutrition'); // NutritionPage로 이동
       })

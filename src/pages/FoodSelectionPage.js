@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './FoodSelectionPage.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import api from '../api';
 
 const FoodSelectionPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const foodName = location.state?.foodName || '';
+
+  const [searchTerm, setSearchTerm] = useState(foodName);
   const [suggestions, setSuggestions] = useState([]);
+
+  const fetchSuggestions = async (foodName) => {
+    const response = await api.getFoodNameAutocomplete({ name: foodName });
+    setSuggestions(response.map(({ id, name }) => ({ id, name })));
+  };
+
+  useEffect(() => {
+    if (location.state.foodName) {
+      fetchSuggestions(location.state.foodName);
+    }
+  }, [location]);
 
   // 검색어 입력 핸들러
   const handleChange = async (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-
-    // API 호출 로직은 여기에 추가하면 됩니다.
-    setSuggestions([
-      '예시 음식1',
-      '예시 음식2',
-      '예시 음식3',
-      '예시 음식4',
-    ]); // 임시 데이터
+    await fetchSuggestions(value);
   };
 
   // 자동완성 항목 클릭 핸들러
@@ -27,7 +38,10 @@ const FoodSelectionPage = () => {
 
   // 확인 버튼 핸들러
   const handleConfirm = () => {
-    alert(`선택된 음식: ${searchTerm}`);
+    navigate('/food/input-form', {
+      state: { name: searchTerm.name, id: searchTerm.id },
+    });
+    alert(`선택된 음식: ${searchTerm.name}`);
   };
 
   return (
@@ -38,7 +52,7 @@ const FoodSelectionPage = () => {
           type="text"
           className="search-input"
           placeholder="음식 이름을 검색하세요"
-          value={searchTerm}
+          value={searchTerm?.name || ''}
           onChange={handleChange}
         />
         {/* 자동완성 리스트 */}
@@ -50,7 +64,7 @@ const FoodSelectionPage = () => {
                 onClick={() => handleSuggestionClick(suggestion)} // 항목 클릭 시
                 className="suggestion-item"
               >
-                {suggestion}
+                {suggestion.name}
               </li>
             ))}
           </ul>

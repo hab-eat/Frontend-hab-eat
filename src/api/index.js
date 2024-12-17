@@ -55,6 +55,28 @@ class Api extends BaseRestApi {
     return this.POST('/foods/class-names', { key: s3Key });
   }
 
+  getFoodNameAutocomplete({ name, page = 1, limit = 30 } = {}) {
+    return this.GET(
+      `/foods/autocomplete?keyword=${name}&page=${page}&limit=${30}`,
+    );
+  }
+
+  getFood(id) {
+    return this.GET(`/foods/${id}`);
+  }
+
+  postDiets(body) {
+    return this.POST('/diets', body);
+  }
+
+  getDietsStats(date) {
+    return this.GET(`/diets/stats/?date=${date}`);
+  }
+
+  postNutriChallengeCertifications(data) {
+    return this.POST(`/challenges/nutritions/certifications`, data);
+  }
+
   getChallenges() {
     return this.GET('/challenges');
   }
@@ -75,6 +97,10 @@ class Api extends BaseRestApi {
     return this.GET(
       `/challenges/${id}/certification-logs?startDate=${startDate}&endDate=${endDate}`,
     );
+  }
+
+  getDiets(date) {
+    return this.GET(`/diets?date=${date}`);
   }
 
   async uploadImageToSignedUrl({ signedUrl, file, type }) {
