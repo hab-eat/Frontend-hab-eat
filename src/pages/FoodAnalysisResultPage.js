@@ -1,7 +1,7 @@
 import React from 'react';
-import './ResultPage.css';
+import './FoodAnalysisResultPage.css';
 
-const ResultPage = ({ foodName, imageUrl,comment }) => {
+const FoodAnalysisResultPage = ({ foodName, imageUrl, comment }) => {
   return (
     <div className="result-container">
       <h1 className="result-title">{comment}</h1>
@@ -9,10 +9,14 @@ const ResultPage = ({ foodName, imageUrl,comment }) => {
         <span>{foodName}</span>입니다!
       </h2>
       <div className="result-image-container">
-        <img src={"/folder.png"} alt={`${foodName} 이미지`} className="result-image" />
+        <img
+          src={'/folder.png'}
+          alt={`${foodName} 이미지`}
+          className="result-image"
+        />
       </div>
     </div>
   );
 };
 
-export default ResultPage;
+export default FoodAnalysisResultPage;

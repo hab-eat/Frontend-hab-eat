@@ -1,7 +1,7 @@
 import React from 'react';
-import './ResultSecond.css';
+import './FoodAnalysisSecondResultPage.css'; // ResultSecond.js 재사용
 
-const ResultSecond = ({ foodName, imageUrl, comment }) => {
+const FoodAnalysisSecondResultPage = ({ foodName, imageUrl, comment }) => {
   return (
     <div className="result-second-container">
       <div className="result-second-overlay"></div> {/* 어두운 레이어 */}
@@ -11,7 +11,11 @@ const ResultSecond = ({ foodName, imageUrl, comment }) => {
           <span>{foodName}</span>입니다!
         </h2>
         <div className="result-second-image-container">
-          <img src={"/folder.png"} alt={`${foodName} 이미지`} className="result-second-image" />
+          <img
+            src={'/folder.png'}
+            alt={`${foodName} 이미지`}
+            className="result-second-image"
+          />
         </div>
         <div className="result-second-buttons">
           <button className="result-second-button">맞아요</button>
@@ -23,4 +27,4 @@ const ResultSecond = ({ foodName, imageUrl, comment }) => {
   );
 };
 
-export default ResultSecond;
+export default FoodAnalysisSecondResultPage;
