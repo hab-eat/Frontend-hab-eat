@@ -1,7 +1,12 @@
 import React from 'react';
 import './FoodAnalysisResultPage.css';
+import { useLocation } from 'react-router-dom';
 
-const FoodAnalysisResultPage = ({ foodName, imageUrl, comment }) => {
+const FoodAnalysisResultPage = () => {
+  const location = useLocation();
+  const foodName = location.state.foodName || '';
+  const comment = location.state.comment || 'Hab-eat이 생각한 음식은..';
+
   return (
     <div className="result-container">
       <h1 className="result-title">{comment}</h1>

@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
 import './NutritionCarmera.css';
 import Api from '../api';
+import { useNavigate } from 'react-router-dom';
 
 const NutritionCarmera = ({ setLoading }) => {
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleCameraClick = () => {
     fileInputRef.current.click();
@@ -33,8 +35,7 @@ const NutritionCarmera = ({ setLoading }) => {
         // Step 3: foods/get-image-name 호출
 
         const { name } = await Api.getFoodClassName(key);
-        console.log('Fetched image name:', name);
-
+        navigate('/analysis/food-image/result', { state: { foodName: name } });
         setLoading(false);
       } catch (error) {
         console.error('Error during image upload flow:', error);
