@@ -21,6 +21,8 @@ import FoodAnalysisCheckPage from './pages/FoodAnalysisCheckPage';
 import FoodAnalysisRetryPage from './pages/FoodAnalysisRetryPage';
 import FoodSelectionPage from './pages/FoodSelectionPage';
 import QuantityAdjustPage from './pages/QuantityAdjustPage';
+import SuccessPage from './pages/SuccessPage';
+import RetryPage from './pages/RetryPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 여부 상태
@@ -83,6 +85,9 @@ const App = () => {
           <Route path="/food/autocomplete" element={<FoodSelectionPage />} />
           <Route path="/food/input-form" element={<QuantityAdjustPage />} />
           <Route path="/challenge/camera" element={<ChallengeCamera />} />
+
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/retry" element={<RetryPage />} />
         </Routes>
       </div>
     </Router>
