@@ -99,6 +99,10 @@ class Api extends BaseRestApi {
     );
   }
 
+  getDiets(date) {
+    return this.GET(`/diets?date=${date}`);
+  }
+
   async uploadImageToSignedUrl({ signedUrl, file, type }) {
     return axios
       .put(signedUrl, file, { headers: { 'Content-Type': type } })
