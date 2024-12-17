@@ -9,7 +9,8 @@ const FoodSelectionPage = () => {
 
   const foodName = location.state?.foodName || '';
 
-  const [searchTerm, setSearchTerm] = useState(foodName);
+  const [value, setValue] = useState(foodName);
+  const [id, setId] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
 
   const fetchSuggestions = async (foodName) => {
@@ -26,22 +27,24 @@ const FoodSelectionPage = () => {
   // 검색어 입력 핸들러
   const handleChange = async (e) => {
     const value = e.target.value;
-    setSearchTerm(value);
+    setValue(value);
     await fetchSuggestions(value);
   };
 
   // 자동완성 항목 클릭 핸들러
   const handleSuggestionClick = (suggestion) => {
-    setSearchTerm(suggestion); // 선택된 항목을 입력창에 설정
+    setValue(suggestion.name); // 선택된 항목을 입력창에 설정
+    setId(suggestion.id); // 선택된 항목의 id 설정
     setSuggestions([]); // 자동완성 리스트 숨기기
   };
 
   // 확인 버튼 핸들러
   const handleConfirm = () => {
+    if (id === null) return;
     navigate('/food/input-form', {
-      state: { name: searchTerm.name, id: searchTerm.id },
+      state: { name: value, id: id },
     });
-    alert(`선택된 음식: ${searchTerm.name}`);
+    alert(`선택된 음식: ${value}`);
   };
 
   return (
@@ -52,7 +55,7 @@ const FoodSelectionPage = () => {
           type="text"
           className="search-input"
           placeholder="음식 이름을 검색하세요"
-          value={searchTerm?.name || ''}
+          value={value || ''}
           onChange={handleChange}
         />
         {/* 자동완성 리스트 */}
