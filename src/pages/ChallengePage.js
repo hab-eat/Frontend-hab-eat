@@ -58,7 +58,6 @@ const StyledCalendar = styled(Calendar)`
   }
 `;
 
-
 // Helper to calculate weeks of a month
 const getMonthWeeks = (month, year) => {
   // const firstDay = new Date(year, month - 1, 1);
@@ -125,15 +124,14 @@ const getMonthWeeks = (month, year) => {
   return weeks;
 };
 
-// const toLocalISOString = (date) => {
-//   return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-//     .toISOString()
-//     .replace('Z', '');
-// };
+const toLocalISOString = (date) => {
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+    .toISOString()
+    .replace('Z', '');
+};
 
 // Fetch data from API
 const fetchChallengeData = async (id, startDate, endDate) => {
-
   console.log(startDate);
   console.log(endDate);
 
@@ -162,21 +160,23 @@ const ChallengePage = () => {
       try {
         const weeks = getMonthWeeks(month, year);
         // endOfWeek에 시간을 명확히 설정
-        const weeksWithAdjustedTimes = weeks.map(({ startOfWeek, endOfWeek }) => {
-          // endOfWeek를 23:59:59.999로 설정
-          console.log(endOfWeek);
-          endOfWeek.setHours(23, 59, 59, 999);
-          return { startOfWeek, endOfWeek };
-        });
+        const weeksWithAdjustedTimes = weeks.map(
+          ({ startOfWeek, endOfWeek }) => {
+            // endOfWeek를 23:59:59.999로 설정
+            console.log(endOfWeek);
+            endOfWeek.setHours(23, 59, 59, 999);
+            return { startOfWeek, endOfWeek };
+          },
+        );
         const logs = await Promise.all(
           weeksWithAdjustedTimes.map(({ startOfWeek, endOfWeek }) =>
             fetchChallengeData(
               challengeId,
               startOfWeek.toISOString().split('T')[0],
               // endOfWeek.toISOString()
-              toLocalISOString(endOfWeek) // 종료 날짜 (로컬 기준)
-            )
-          )
+              toLocalISOString(endOfWeek), // 종료 날짜 (로컬 기준)
+            ),
+          ),
         );
 
         const newLogMap = {};
@@ -318,7 +318,14 @@ const ChallengePage = () => {
                 <img src={cameraIcon} alt="camera" />
               </button>
             )}
-            <input type="file" accept="image/*" capture="camera" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange} />
+            <input
+              type="file"
+              accept="image/*"
+              capture="camera"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
           </div>
           <StyledCalendar
             locale="en-GB"
