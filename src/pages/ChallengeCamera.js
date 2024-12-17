@@ -1,6 +1,6 @@
-// 개인정보 처리 방침 페이지
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+// 챌린지 카메라 동작 페이지
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import LoadingPage from '../pages/LoadingPage';
 import Api from '../api';
 
@@ -13,6 +13,13 @@ const ChallengeCamera = () => {
   const file = location.state?.file;
   const id = location.state?.id;
   const [loading, setLoading] = useState(false); // 로딩 상태
+  // const [result, setResult] = useState(null); // 분석 결과 저장
+  // const [error, setError] = useState(null);
+
+  const currentDate = new Date();
+  const month = currentDate.getMonth() + 1; // 0-based -> 1-based
+  const year = currentDate.getFullYear();
+  
 
   useEffect(() => {
     // 이미지 분석 시작
@@ -26,33 +33,31 @@ const ChallengeCamera = () => {
 
       try {
         // Presigned URL 가져오기
-        const { url, key } = await fetchPresignedUrl(file.name, file.type);
-        console.log('presignedUrl:', url);
-        console.log('key:', key);
+        const { url , key } = await fetchPresignedUrl(file.name, file.type);
+        console.log("presignedUrl:", url);
+        console.log("key:", key);
 
         await Api.uploadImageToSignedUrl({
           signedUrl: url,
           file,
           type: file.type,
         });
-
+        
         //AI 모델 호출
         const analysisResult = await certifyChallengeImage(id, key);
         console.log({ analysisResult });
 
-        // 결과 처리
-        // setResult(analysisResult); // 분석 결과 저장
+        // navigate('/success', { state: { analysisResult, id } });
+        navigate('/retry', { state: { challengeId: id, analysisResult, month, year} });
 
-        const currentDate = new Date();
-        const month = currentDate.getMonth() + 1; // 0-based -> 1-based
-        const year = currentDate.getFullYear();
         // Step 5: 챌린지 페이지로 이동
-        navigate(`/challenge`, { state: { challengeId: id, month, year } });
+        // navigate(`/challenge`, { state: { challengeId: id, month, year } });
       } catch (error) {
-        console.error('이미지 분석 중 오류 발생:', error);
-        console.log(error);
-        alert('이미지 분석 중 오류가 발생했습니다.');
-        return navigate(`/challenge`); // 오류 발생 시에도 챌린지 페이지로 이동
+        console.error("이미지 분석 중 오류 발생:", error);
+        // 업로드 실패 또는 분석 실패 시 재도전 페이지로 이동
+        navigate('/retry', { state: { challengeId: id, month, year, error } });
+      } finally {
+        setLoading(false); // 로딩 종료
       }
     };
 
@@ -61,7 +66,7 @@ const ChallengeCamera = () => {
 
   if (loading) return <LoadingPage />;
   return (
-    <div className="div">
+    <div className="div" style={{ background: 'linear-gradient(172deg, #00CBA6 10.22%, #00CBA6 40.85%, #0086D3 89.78%)'}}>
       <h1>로딩 중...</h1>
     </div>
   );
@@ -78,6 +83,24 @@ const fetchPresignedUrl = async () => {
     return { url, key };
   } else {
     throw new Error('응답 데이터가 올바르지 않습니다.');
+  }
+};
+
+const uploadImage = async (url, file) => {
+  console.log(file.type);
+  const response = await fetch(url, {
+    method: 'PUT',
+    mode: 'cors',
+    headers: {
+      'Content-Type': file.type,
+    },
+    body: file,
+  });
+
+  console.log(response);
+
+  if (!response.ok) {
+    throw new Error('이미지 업로드 실패');
   }
 };
 

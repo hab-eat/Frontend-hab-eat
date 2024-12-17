@@ -61,11 +61,11 @@ export const HabitPage = () => {
   }, [fetchChallenges]);
 
   const openModal = (challenge) => {
-    // const today = new Date();
-    // if (today.getDay() !== 1) {
-    //   alert("챌린지 참여 신청은 월요일에만 가능합니다.");
-    //   return;
-    // }
+    const today = new Date();
+    if (today.getDay() !== 1) {
+      alert("챌린지 참여 신청은 월요일에만 가능합니다.");
+      return;
+    }
 
     setSelectedChallenge(challenge);
     setIsModalOpen(true);
@@ -85,11 +85,18 @@ export const HabitPage = () => {
     if (days > 1) setDays((prev) => prev - 1);
   };
 
-  const toLocalISOString = (date) => {
-    return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-      .toISOString()
-      .replace('Z', '');
-  };
+  // const toKoreaISOString = (date) => {
+  //   const offsetDate = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9 보정
+  //   const yyyy = offsetDate.getUTCFullYear();
+  //   const mm = String(offsetDate.getUTCMonth() + 1).padStart(2, '0'); // 월 (1-based)
+  //   const dd = String(offsetDate.getUTCDate()).padStart(2, '0'); // 일
+  //   const hh = String(offsetDate.getUTCHours()).padStart(2, '0'); // 시
+  //   const min = String(offsetDate.getUTCMinutes()).padStart(2, '0'); // 분
+  //   const ss = String(offsetDate.getUTCSeconds()).padStart(2, '0'); // 초
+  //   const ms = String(offsetDate.getUTCMilliseconds()).padStart(3, '0'); // 밀리초
+  //   return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}.${ms}`;
+  // };
+  
 
   const completeChallenge = async () => {
     if (selectedChallenge) {
@@ -100,17 +107,22 @@ export const HabitPage = () => {
         challengeType: selectedChallenge.type || 'unknown', // 챌린지 타입 (필요 시 선택적으로 설정)
         goalDays: days,
         successDays: 0, // 처음에는 성공한 일수가 없으므로 0
-        startDate: new Date().toISOString(), // 현재 날짜를 시작일로 설정,
-        // endDate: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString(), // goalDays 후 종료일 계산
-        endDate: (() => {
-          const end = new Date();
-          end.setDate(end.getDate() + 7); // goalDays 후 날짜 설정
-          end.setHours(23, 59, 59, 999); // 시간을 23:59:59.999로 설정
-          return toLocalISOString(end);
-        })(),
+        // startDate: toKoreaISOString(new Date()), // 현재 날짜를 시작일로 설정,
+        // startDate: (() => {
+        //   const start = new Date();
+        //   start.setHours(0, 0, 0, 0); // 오늘 날짜의 0시 0분 0초로 설정
+        //   return toKoreaISOString(start);
+        // })(),
+        // // endDate: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString(), // goalDays 후 종료일 계산
+        // endDate: (() => {
+        //   const end = new Date();
+        //   end.setDate(end.getDate() + 6); // 오늘 날짜로부터 6일 후
+        //   end.setHours(23, 59, 59, 999); // 23시 59분 59초로 설정
+        //   return toKoreaISOString(end);
+        // })(),
         lastSuccessDate: null, // 초기에는 성공 날짜 없음
         lastCheckDate: null, // 초기에는 체크 날짜 없음
-        status: true, // 활성 상태로 설정
+        status: false, // 활성 상태로 설정
       };
 
       // console.log(startDate);
