@@ -16,6 +16,9 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import HabitPage from './pages/HabitPage';
 import ChallengePage from './pages/ChallengePage';
 import ChallengeCamera from './pages/ChallengeCamera';
+import FoodAnalysisResultPage from './pages/FoodAnalysisResultPage';
+import FoodAnalysisCheckPage from './pages/FoodAnalysisCheckPage';
+import FoodAnalysisRetryPage from './pages/FoodAnalysisRetryPage';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 여부 상태
@@ -62,6 +65,19 @@ const App = () => {
           <Route path="/settings/notifications" element={<Notifications />} />
           <Route path="/settings/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/challenge" element={<ChallengePage />} />
+          <Route path="/challenge/camera" element={<ChallengeCamera />} />
+          <Route
+            path="/analysis/food-image/result"
+            element={<FoodAnalysisResultPage />}
+          />
+          <Route
+            path="/analysis/food-image/check"
+            element={<FoodAnalysisCheckPage />}
+          />
+          <Route
+            path="/analysis/food-image/retry"
+            element={<FoodAnalysisRetryPage />}
+          />
           <Route path="/challenge/camera" element={<ChallengeCamera />} />
         </Routes>
       </div>
