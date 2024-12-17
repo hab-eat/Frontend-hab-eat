@@ -10,6 +10,7 @@ import right from '../img/right.svg';
 import medalIcon from '../img/medal.svg';
 import cameraIcon from '../img/greenCamera.svg';
 import NavigationBar from '../components/NavigationBar';
+import Api from '../api';
 
 // Styled Calendar
 const StyledCalendar = styled(Calendar)`
@@ -20,7 +21,7 @@ const StyledCalendar = styled(Calendar)`
 
   .react-calendar__tile {
     background-color: #fdfdfd;
-    color: #8E8E8E;
+    color: #8e8e8e;
     height: 70px;
     display: flex;
     flex-direction: column;
@@ -33,7 +34,7 @@ const StyledCalendar = styled(Calendar)`
 
   .react-calendar__tile--now {
     background-color: #c5f5d1;
-    border: 1px soild #00C5A1
+    border: 1px soild #00c5a1;
     font-weight: bold;
     color: #000;
   }
@@ -47,7 +48,7 @@ const StyledCalendar = styled(Calendar)`
 
   .react-calendar__navigation {
     display: flex;
-    background-color: #00C5A1;
+    background-color: #00c5a1;
     color: white;
   }
 
@@ -131,26 +132,12 @@ const getMonthWeeks = (month, year) => {
 // };
 
 // Fetch data from API
-const fetchChallengeData = async (id, startDate, endDate) => 
-  {
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  const TOKEN = process.env.REACT_APP_API_TOKEN;
+const fetchChallengeData = async (id, startDate, endDate) => {
+
   console.log(startDate);
   console.log(endDate);
 
-  const response = await fetch(
-    `${API_URL}challenges/${id}/certification-logs?startDate=${startDate}&endDate=${endDate}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  // console.log(response);
-  if (!response.ok) throw new Error(`Failed to fetch data: ${response.status}`);
-  return response.json();
+  return Api.getChallengeCertificationLogs({ id, startDate, endDate });
 };
 
 const ChallengePage = () => {
@@ -175,23 +162,21 @@ const ChallengePage = () => {
       try {
         const weeks = getMonthWeeks(month, year);
         // endOfWeek에 시간을 명확히 설정
-        const weeksWithAdjustedTimes = weeks.map(
-          ({ startOfWeek, endOfWeek }) => {
-            // endOfWeek를 23:59:59.999로 설정
-            // console.log(endOfWeek);
-            // endOfWeek.setHours(23, 59, 59, 999);
-            return { startOfWeek, endOfWeek };
-          },
-        );
+        const weeksWithAdjustedTimes = weeks.map(({ startOfWeek, endOfWeek }) => {
+          // endOfWeek를 23:59:59.999로 설정
+          console.log(endOfWeek);
+          endOfWeek.setHours(23, 59, 59, 999);
+          return { startOfWeek, endOfWeek };
+        });
         const logs = await Promise.all(
           weeksWithAdjustedTimes.map(({ startOfWeek, endOfWeek }) =>
             fetchChallengeData(
               challengeId,
               startOfWeek.toISOString().split('T')[0],
-              endOfWeek.toISOString(),
-              // toLocalISOString(endOfWeek), // 종료 날짜 (로컬 기준)
-            ),
-          ),
+              // endOfWeek.toISOString()
+              toLocalISOString(endOfWeek) // 종료 날짜 (로컬 기준)
+            )
+          )
         );
 
         const newLogMap = {};
@@ -326,21 +311,14 @@ const ChallengePage = () => {
             </div>
             {/* <button className="camera-button" onClick={handleCameraClick}>
               <img src={cameraIcon} alt="camera"></img>
-            </button> */}
+            </button>
             {/* 카메라 버튼 조건부 렌더링 */}
             {showCameraButton && (
               <button className="camera-button" onClick={handleCameraClick}>
                 <img src={cameraIcon} alt="camera" />
               </button>
             )}
-            <input
-              type="file"
-              accept="image/*"
-              capture="camera"
-              style={{ display: 'none' }}
-              ref={fileInputRef}
-              onChange={handleFileChange}
-            />
+            <input type="file" accept="image/*" capture="camera" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange} />
           </div>
           <StyledCalendar
             locale="en-GB"

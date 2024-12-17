@@ -1,30 +1,19 @@
 import React, { useState } from 'react';
 import './NutritionPage.css';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import NavigationBar from '../components/NavigationBar'; // 네비게이션 바 컴포넌트 가져오기
+import LoadingPage from '../pages/LoadingPage';
+import NutritionCarmera from '../components/NutritionCarmera';
+import NutritionInfo from '../components/NutritionInfo';
+import NutritionCalendar from '../components/NutritionCalendar';
+import NutritionMeals from '../components/NutritionMeals';
 
 const NutritionPage = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-
-  const [meals, setMeals] = useState({
-    breakfast: ['토스트', '커피'],
-    lunch: ['샐러드'],
-    dinner: [],
-  });
-
-  const handleCalendarToggle = () => {
-    setIsCalendarOpen(!isCalendarOpen);
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    setIsCalendarOpen(false);
-  };
-
+  const [isLoading, setLoading] = useState(false);
+  if (isLoading) return <LoadingPage />;
   return (
     <div className="nutrition-container">
+<<<<<<< HEAD
       {/* 달력 버튼 */}
       <div className="calendar-section">
         <span className="selected-date">
@@ -84,6 +73,14 @@ const NutritionPage = () => {
 
       {/* 네비게이션 바 */}
       <NavigationBar />
+=======
+      <NutritionCalendar />
+      <NutritionInfo />
+      <NutritionMeals />
+      <NavigationBar
+        CarmeraElement={<NutritionCarmera setLoading={setLoading} />}
+      />
+>>>>>>> 4e7fc5aa9ed55c93f24887d8a95f22db4987ec43
     </div>
   );
 };

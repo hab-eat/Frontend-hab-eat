@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HabitPage.css';
 import NavigationBar from '../components/NavigationBar'; // 네비게이션 바 컴포넌트 가져오기
+import Api from '../api';
 
 export const HabitPage = () => {
   const navigate = useNavigate();
   // const location = useLocation();
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
-  const TOKEN = process.env.REACT_APP_API_TOKEN;
 
   const [availableChallenges, setAvailableChallenges] = useState([]);
   const [ongoingChallenges, setOngoingChallenges] = useState([]);
@@ -22,30 +21,7 @@ export const HabitPage = () => {
     setError(null);
 
     try {
-      const token = `${TOKEN}`; // 로그인 토큰 가져오기
-      if (!token)
-        throw new Error('로그인 토큰이 없습니다. 다시 로그인해주세요.');
-
-      const response = await fetch(`${API_URL}challenges`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`, // 토큰 포함
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // 필요시 쿠키 전송
-      });
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          // 인증 만료 또는 실패 처리
-          alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-          navigate('/login');
-          return;
-        }
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
+      const data = await Api.getChallenges();
 
       // 데이터 상태 업데이트
       setAvailableChallenges(
@@ -62,7 +38,6 @@ export const HabitPage = () => {
         data.ongingChallenges.map((challenge) => ({
           id: challenge.id,
           name: challenge.name,
-          userId: `${TOKEN}`, // 사용자 ID는 토큰에서 가져오거나 백엔드에서 처리
           challengeId: challenge.id,
           challengeType: challenge.type || 'unknown',
           goalDays: challenge.goalDays,
@@ -79,7 +54,7 @@ export const HabitPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [API_URL, TOKEN, navigate]); // 필요한 의존성만 추가
+  }, []); // 필요한 의존성만 추가
 
   useEffect(() => {
     fetchChallenges();
@@ -128,7 +103,6 @@ export const HabitPage = () => {
       // POST 요청 데이터 생성
       const requestBody = {
         id: 0, // 서버에서 자동 생성될 경우 0으로 설정
-        userId: `${TOKEN}`, // 사용자 ID는 토큰에서 가져오거나 백엔드에서 처리
         challengeId: selectedChallenge.id,
         challengeType: selectedChallenge.type || 'unknown', // 챌린지 타입 (필요 시 선택적으로 설정)
         goalDays: days,
@@ -155,40 +129,30 @@ export const HabitPage = () => {
       console.log(requestBody);
 
       try {
-        const token = `${TOKEN}`; // 환경 변수에서 토큰 가져오기
-        const response = await fetch(`${API_URL}challenges/${selectedChallenge.id}/participants`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`, // 토큰 포함
-          },
-          body: JSON.stringify(requestBody), // 요청 데이터
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const responseData = await response.json();
-        console.log("Challenge participation successful:", responseData);
+        await Api.postChallengeParticipants(selectedChallenge.id, days);
 
         // 참여 중 챌린지에 추가
         setOngoingChallenges((prevOngoingChallenges) => [
           ...prevOngoingChallenges,
-          { ...selectedChallenge, name: selectedChallenge.title, status: "participating", days },
+          {
+            ...selectedChallenge,
+            name: selectedChallenge.title,
+            status: 'participating',
+            days,
+          },
         ]);
 
         // 참여 가능 챌린지에서 제거
         setAvailableChallenges((prevAvailableChallenges) =>
           prevAvailableChallenges.filter(
-            (challenge) => challenge.id !== selectedChallenge.id
-          )
+            (challenge) => challenge.id !== selectedChallenge.id,
+          ),
         );
 
         closeModal(); // 모달 닫기
       } catch (error) {
-        console.error("Error completing challenge:", error);
-        alert("챌린지 참여에 실패했습니다. 다시 시도해주세요.");
+        console.error('Error completing challenge:', error);
+        alert('챌린지 참여에 실패했습니다. 다시 시도해주세요.');
       }
     }
   };
