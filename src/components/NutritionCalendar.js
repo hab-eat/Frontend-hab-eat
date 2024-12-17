@@ -2,8 +2,7 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import './NutritionCalendar.css';
 
-const NutritionCalendar = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const NutritionCalendar = ({ selectedDate, setSelectedDate }) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const handleCalendarToggle = () => {
@@ -11,6 +10,7 @@ const NutritionCalendar = () => {
   };
 
   const handleDateChange = (date) => {
+    date.setHours(date.getHours() + 9); //달력이 하루 씩 밀려 추가함
     setSelectedDate(date);
     setIsCalendarOpen(false);
   };
