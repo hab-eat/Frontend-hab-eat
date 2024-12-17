@@ -65,8 +65,6 @@ const App = () => {
           <Route path="/challenge" element={<ChallengePage />} />
           <Route path="/challenge/camera" element={<ChallengeCamera />} />
         </Routes>
-        {isAuthenticated && <NavigationBar />}{' '}
-        {/* 로그인 후에만 네비게이션 바 표시 */}
       </div>
     </Router>
   );
