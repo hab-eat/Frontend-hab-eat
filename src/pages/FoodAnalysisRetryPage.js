@@ -37,7 +37,9 @@ const FoodAnalysisRetryPage = () => {
             다시 촬영
           </button>
           <div className="result-second-divider"></div>
-          <button className="result-second-button">직접 입력</button>
+          <button className="result-second-button" onClick={onClickEnterBtn}>
+            직접 입력
+          </button>
         </div>
       </div>
     </div>
