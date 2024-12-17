@@ -61,6 +61,22 @@ class Api extends BaseRestApi {
     );
   }
 
+  getFood(id) {
+    return this.GET(`/foods/${id}`);
+  }
+
+  postDiets(body) {
+    return this.POST('/diets', body);
+  }
+
+  getDietsStats(date) {
+    return this.GET(`/diets/?date=${date}`);
+  }
+
+  postNutriChallengeCertifications(data) {
+    return this.POST(`/challenges/nutritions/certifications`, data);
+  }
+
   getChallenges() {
     return this.GET('/challenges');
   }

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './FoodSelectionPage.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../api';
 
 const FoodSelectionPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const foodName = location.state?.foodName || '';
 
@@ -31,13 +32,16 @@ const FoodSelectionPage = () => {
 
   // 자동완성 항목 클릭 핸들러
   const handleSuggestionClick = (suggestion) => {
-    setSearchTerm(suggestion.name); // 선택된 항목을 입력창에 설정
+    setSearchTerm(suggestion); // 선택된 항목을 입력창에 설정
     setSuggestions([]); // 자동완성 리스트 숨기기
   };
 
   // 확인 버튼 핸들러
   const handleConfirm = () => {
-    alert(`선택된 음식: ${searchTerm}`);
+    navigate('/food/input-form', {
+      state: { name: searchTerm.name, id: searchTerm.id },
+    });
+    alert(`선택된 음식: ${searchTerm.name}`);
   };
 
   return (
@@ -48,7 +52,7 @@ const FoodSelectionPage = () => {
           type="text"
           className="search-input"
           placeholder="음식 이름을 검색하세요"
-          value={searchTerm}
+          value={searchTerm?.name || ''}
           onChange={handleChange}
         />
         {/* 자동완성 리스트 */}
