@@ -1,0 +1,62 @@
+/* 전체 페이지 컨테이너 */
+.quantity-adjust-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #00CBA6, #0086D3);
+    color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 제목 스타일 */
+.quantity-adjust-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 입력 필드와 버튼 공통 스타일 */
+.quantity-input-container, .quantity-submit-button {
+    width: 100%;
+    max-width: 300px; /* 동일한 최대 너비 */
+    margin-bottom: 20px;
+}
+
+.quantity-input {
+    width: 100%;
+    padding: 12px; /* 동일한 높이 확보 */
+    font-size: 1rem;
+    border: 2px solid #00CBA6;
+    border-radius: 5px;
+    outline: none;
+    color: #333;
+    text-align: center;
+    box-sizing: border-box; /* padding 포함한 너비 유지 */
+}
+
+.quantity-input:focus {
+    border-color: #0086D3;
+    box-shadow: 0 0 5px rgba(0, 197, 161, 0.5);
+}
+
+/* 입력 완료 버튼 */
+.quantity-submit-button {
+    padding: 12px; /* 동일한 높이 확보 */
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #00CBA6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box; /* padding 포함한 너비 유지 */
+}
+
+.quantity-submit-button:hover {
+    background-color: #0086D3;
+}
