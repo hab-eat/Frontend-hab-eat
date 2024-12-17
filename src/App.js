@@ -8,7 +8,6 @@ import {
 import LoginPage from './pages/LoginPage';
 import UserInfoPage from './pages/UserInfoPage';
 import NutritionPage from './pages/NutritionPage';
-import NavigationBar from './components/NavigationBar';
 import MyPage from './pages/MyPage';
 import Settings from './pages/Settings';
 import Guide from './pages/Guide';
