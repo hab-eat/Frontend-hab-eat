@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './QuantityAdjustPage.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../api';
 import * as _ from 'lodash';
 
 const QuantityAdjustPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const foodId = location.state?.id;
   const foodName = location.state?.name;
 
   const [servingSize, setServingSize] = useState(0);
@@ -102,6 +102,8 @@ const QuantityAdjustPage = () => {
         cholesterol: dietsStats.cholesterol,
         sugar: dietsStats.sugar,
       });
+
+      navigate('/nutrition');
     } catch (e) {
       alert('식단 업로드에 실패했습니다.');
     }
