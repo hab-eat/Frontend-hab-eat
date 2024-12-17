@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import './FoodSelectionPage.css';
+import { useLocation } from 'react-router-dom';
 
 const FoodSelectionPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+
+  const foodName = location.state?.foodName || '';
+
+  const [searchTerm, setSearchTerm] = useState(foodName);
   const [suggestions, setSuggestions] = useState([]);
 
   // 검색어 입력 핸들러
@@ -11,12 +16,7 @@ const FoodSelectionPage = () => {
     setSearchTerm(value);
 
     // API 호출 로직은 여기에 추가하면 됩니다.
-    setSuggestions([
-      '예시 음식1',
-      '예시 음식2',
-      '예시 음식3',
-      '예시 음식4',
-    ]); // 임시 데이터
+    setSuggestions(['예시 음식1', '예시 음식2', '예시 음식3', '예시 음식4']); // 임시 데이터
   };
 
   // 자동완성 항목 클릭 핸들러

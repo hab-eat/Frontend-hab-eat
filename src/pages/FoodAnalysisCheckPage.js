@@ -9,7 +9,7 @@ const FoodAnalysisCheckPage = () => {
   const comment = location.state?.comment || 'Hab-eat이 생각한 음식은..';
 
   const onClickYesBtn = () => {
-    // TODO: navigate to 자동 완성 페이지
+    navigate('/food/autocomplete', { state: { foodName } });
   };
 
   const onClickNoBtn = () => {

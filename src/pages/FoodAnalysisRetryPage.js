@@ -13,7 +13,7 @@ const FoodAnalysisRetryPage = () => {
   };
 
   const onClickEnterBtn = () => {
-    // TODO: navigate to 자동 완성 페이지
+    navigate('/food/autocomplete');
   };
 
   return (
