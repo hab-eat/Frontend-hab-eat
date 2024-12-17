@@ -55,6 +55,12 @@ class Api extends BaseRestApi {
     return this.POST('/foods/class-names', { key: s3Key });
   }
 
+  getFoodNameAutocomplete({ name, page = 1, limit = 30 } = {}) {
+    return this.GET(
+      `/foods/autocomplete?keyword=${name}&page=${page}&limit=${30}`,
+    );
+  }
+
   getChallenges() {
     return this.GET('/challenges');
   }
