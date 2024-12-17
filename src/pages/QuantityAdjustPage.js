@@ -74,6 +74,7 @@ const QuantityAdjustPage = () => {
 
       await api.postDiets({
         date: dateString,
+        name: foodName,
         amount: servingSize,
         kcal: kcal * rate,
         carbohydrate: carbohydrate * rate,
