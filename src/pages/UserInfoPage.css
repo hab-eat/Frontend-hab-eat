@@ -48,6 +48,7 @@ label {
 }
 
 /* 텍스트 입력 */
+.user-info-container
 input[type='text'],
 input[type='number'],
 select {

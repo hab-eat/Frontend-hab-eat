@@ -4,8 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import LoadingPage from '../pages/LoadingPage';
 import Api from '../api';
 
-const API_URL = process.env.REACT_APP_BAEKEND_URL;
-const TOKEN = process.env.REACT_APP_API_TOKEN;
+// const API_URL = process.env.REACT_APP_BAEKEND_URL;
+// const TOKEN = process.env.REACT_APP_API_TOKEN;
 
 const ChallengeCamera = () => {
   const navigate = useNavigate();
@@ -91,23 +91,23 @@ const fetchPresignedUrl = async () => {
   }
 };
 
-const uploadImage = async (url, file) => {
-  console.log(file.type);
-  const response = await fetch(url, {
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      'Content-Type': file.type,
-    },
-    body: file,
-  });
+// const uploadImage = async (url, file) => {
+//   console.log(file.type);
+//   const response = await fetch(url, {
+//     method: 'PUT',
+//     mode: 'cors',
+//     headers: {
+//       'Content-Type': file.type,
+//     },
+//     body: file,
+//   });
 
-  console.log(response);
+//   console.log(response);
 
-  if (!response.ok) {
-    throw new Error('이미지 업로드 실패');
-  }
-};
+//   if (!response.ok) {
+//     throw new Error('이미지 업로드 실패');
+//   }
+// };
 
 const certifyChallengeImage = async (id, key) => {
   return Api.postChallengeCertifications(id, key);
