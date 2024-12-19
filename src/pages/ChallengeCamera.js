@@ -12,6 +12,8 @@ const ChallengeCamera = () => {
   const location = useLocation();
   const file = location.state?.file;
   const id = location.state?.id;
+  const name = location.state?.name;
+  const description = location.state?.description;
   const [loading, setLoading] = useState(false); // 로딩 상태
   // const [result, setResult] = useState(null); // 분석 결과 저장
   // const [error, setError] = useState(null);
@@ -43,7 +45,7 @@ const ChallengeCamera = () => {
         const analysisResult = await certifyChallengeImage(id, key);
 
         navigate('/success', {
-          state: { analysisResult, challengeId: id, month, year },
+          state: { analysisResult, challengeId: id, name, description, month, year },
         });
       } catch (error) {
         console.log('이미지 분석 중 오류 발생:', error.code);
@@ -53,7 +55,7 @@ const ChallengeCamera = () => {
           message = '이미 인증 완료된 챌린지입니다.';
         }
         navigate('/retry', {
-          state: { challengeId: id, month, year, message },
+          state: { challengeId: id, name, description, month, year, message },
         });
       } finally {
         setLoading(false); // 로딩 종료
@@ -61,7 +63,7 @@ const ChallengeCamera = () => {
     };
 
     analyze();
-  }, [file, id, navigate]); // file이 변경될 때만 실행
+  }, [file, id, name, description, navigate]); // file이 변경될 때만 실행
 
   if (loading) return <LoadingPage />;
   return (
