@@ -23,43 +23,23 @@ import FoodSelectionPage from './pages/FoodSelectionPage';
 import QuantityAdjustPage from './pages/QuantityAdjustPage';
 import SuccessPage from './pages/SuccessPage';
 import RetryPage from './pages/RetryPage';
+import KakaoRedirectPage from './pages/KakaoRedirectPage';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 여부 상태
-  const [isInfoComplete, setIsInfoComplete] = useState(false); // 유저 정보 입력 여부 상태
-
-  const handleLoginSuccess = () => {
-    setIsAuthenticated(true); // 로그인 성공 시 상태 변경
-  };
-
-  const handleInfoComplete = () => {
-    setIsInfoComplete(true); // 유저 정보 입력 완료 시 상태 변경
-    console.log(isAuthenticated, isInfoComplete);
-  };
+  const [isAuthenticated] = useState(!!localStorage.getItem('Back_Token'));
 
   return (
     <Router>
       <div style={{ paddingBottom: '80px' }}>
         <Routes>
-          {/* 초기 화면: LoginPage */}
           <Route
             path="/"
             element={
-              isAuthenticated ? (
-                isInfoComplete ? (
-                  <Navigate to="/nutrition" />
-                ) : (
-                  <Navigate to="/userinfo" />
-                )
-              ) : (
-                <LoginPage onLoginSuccess={handleLoginSuccess} />
-              )
+              isAuthenticated ? <Navigate to="/nutrition" /> : <LoginPage />
             }
           />
-          <Route
-            path="/userinfo"
-            element={<UserInfoPage onComplete={handleInfoComplete} />}
-          />
+          <Route path="/kakao-redirect" element={<KakaoRedirectPage />} />
+          <Route path="/userinfo" element={<UserInfoPage />} />
           <Route path="/nutrition" element={<NutritionPage />} />
           <Route path="/habit" element={<HabitPage />} />
           <Route path="/mypage" element={<MyPage />} />

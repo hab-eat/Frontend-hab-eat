@@ -19,6 +19,12 @@ class BaseRestApi {
     return response.data;
   }
 
+  async PUT(path, body) {
+    const requestConfig = this.getRequestConfig();
+    const response = await this.instance.put(path, body, requestConfig);
+    return response.data;
+  }
+
   async POST(path, body) {
     const requestConfig = this.getRequestConfig();
     const response = await this.instance.post(path, body, requestConfig);
@@ -41,6 +47,10 @@ class BaseRestApi {
 class Api extends BaseRestApi {
   kakaoSignOrUp(body) {
     return this.POST('/users/kakao-login', body);
+  }
+
+  PutUser(body) {
+    return this.PUT('/users', body);
   }
 
   getTargetNutrients() {
@@ -110,7 +120,6 @@ class Api extends BaseRestApi {
   }
 
   async getKakaoAccessToken(code) {
-    console.log('getKakaoAccessToken');
     const redirectUrl = process.env.REACT_APP_KAKAO_REDIRECT_URL;
     const Rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY;
     return axios.post('https://kauth.kakao.com/oauth/token', null, {
