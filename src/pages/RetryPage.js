@@ -43,7 +43,6 @@ const RetryPage = () => {
       style={{ marginTop: '50%', textAlign: 'center', color: 'white' }}
     >
       <h1 style={{ color: 'white' }}>😢 {message || '분석 실패'} 😢</h1>
-      <p>챌린지 ID: {challengeId}</p>
       <div style={{ marginTop: '20px' }}>
         {errorCode === 409 ? null : (
           <button
