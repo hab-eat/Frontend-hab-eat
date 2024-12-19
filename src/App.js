@@ -24,6 +24,7 @@ import QuantityAdjustPage from './pages/QuantityAdjustPage';
 import SuccessPage from './pages/SuccessPage';
 import RetryPage from './pages/RetryPage';
 import KakaoRedirectPage from './pages/KakaoRedirectPage';
+import DirectInputPage from './pages/DirectInputPage';
 
 const App = () => {
   const [isAuthenticated] = useState(!!localStorage.getItem('Back_Token'));
@@ -62,6 +63,7 @@ const App = () => {
             path="/analysis/food-image/retry"
             element={<FoodAnalysisRetryPage />}
           />
+          <Route path="/food/direct-input" element={<DirectInputPage />} />
           <Route path="/food/autocomplete" element={<FoodSelectionPage />} />
           <Route path="/food/input-form" element={<QuantityAdjustPage />} />
           <Route path="/challenge/camera" element={<ChallengeCamera />} />
