@@ -65,6 +65,7 @@
 .nutrition-list {
   list-style: none;
   padding: 0;
+  overflow:hidden;
 }
 
 .nutrition-list li {

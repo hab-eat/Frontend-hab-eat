@@ -59,7 +59,9 @@ const NutritionMeals = () => {
                 </p>
               ))
             ) : (
-              <p>등록된 음식이 없습니다.</p>
+              <p>
+                
+              </p>
             )}
           </div>
         </div>
