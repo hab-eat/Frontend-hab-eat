@@ -50,7 +50,7 @@ const RetryPage = () => {
           </p>
         </div>
       )}
-      <p>챌린지 ID: {challengeId}</p>
+      {/* <p>챌린지 ID: {challengeId}</p> */}
       <div style={{ marginTop: '20px' }}>
         <button
           style={{

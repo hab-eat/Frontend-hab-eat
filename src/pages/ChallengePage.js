@@ -198,6 +198,7 @@ const ChallengePage = () => {
     };
 
     fetchLogs();
+    fetchChallengeDescription(challengeId, setChallenge);
   }, [challengeId, month, year]);
 
   useEffect(() => {
@@ -232,6 +233,7 @@ const ChallengePage = () => {
     };
 
     fetchLogs();
+    fetchChallengeDescription(challengeId, setChallenge);
   }, [challengeId, month, year]);
 
 

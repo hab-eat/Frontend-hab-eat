@@ -38,7 +38,7 @@ const SuccessPage = () => {
       }}
     >
       <h1 style={{ color: 'white' }}>🎉 분석 성공! 🎉</h1>
-      <p>챌린지 ID: {challengeId}</p>
+      {/* <p>챌린지 ID: {challengeId}</p> */}
       {/* {analysisResult && (
         <div>
           <h3>분석 결과:</h3>
