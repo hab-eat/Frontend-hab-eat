@@ -13,34 +13,66 @@ class BaseRestApi {
     return token ? { headers: { Authorization: `Bearer ${token}` } } : {};
   }
 
+  accessDeniedErrorHandling(error) {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('Back_Token');
+      window.location.href = process.env.REACT_APP_BASE_URL;
+    }
+  }
+
   async GET(path, params) {
-    const requestConfig = { params, ...this.getRequestConfig() };
-    const response = await this.instance.get(path, requestConfig);
-    return response.data;
+    try {
+      const requestConfig = { params, ...this.getRequestConfig() };
+      const response = await this.instance.get(path, requestConfig);
+      return response.data;
+    } catch (error) {
+      this.accessDeniedErrorHandling(error);
+      throw error;
+    }
   }
 
   async PUT(path, body) {
-    const requestConfig = this.getRequestConfig();
-    const response = await this.instance.put(path, body, requestConfig);
-    return response.data;
+    try {
+      const requestConfig = this.getRequestConfig();
+      const response = await this.instance.put(path, body, requestConfig);
+      return response.data;
+    } catch (error) {
+      this.accessDeniedErrorHandling(error);
+      throw error;
+    }
   }
 
   async POST(path, body) {
-    const requestConfig = this.getRequestConfig();
-    const response = await this.instance.post(path, body, requestConfig);
-    return response.data;
+    try {
+      const requestConfig = this.getRequestConfig();
+      const response = await this.instance.post(path, body, requestConfig);
+      return response.data;
+    } catch (error) {
+      this.accessDeniedErrorHandling(error);
+      throw error;
+    }
   }
 
   async PATCH(path, body) {
-    const requestConfig = this.getRequestConfig();
-    const response = await this.instance.post(path, body, requestConfig);
-    return response.data;
+    try {
+      const requestConfig = this.getRequestConfig();
+      const response = await this.instance.post(path, body, requestConfig);
+      return response.data;
+    } catch (error) {
+      this.accessDeniedErrorHandling(error);
+      throw error;
+    }
   }
 
   async DELETE(path) {
-    const requestConfig = this.getRequestConfig();
-    const response = await this.instance.delete(path, requestConfig);
-    return response.data;
+    try {
+      const requestConfig = this.getRequestConfig();
+      const response = await this.instance.delete(path, requestConfig);
+      return response.data;
+    } catch (error) {
+      this.accessDeniedErrorHandling(error);
+      throw error;
+    }
   }
 }
 
