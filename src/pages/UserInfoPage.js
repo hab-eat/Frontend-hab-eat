@@ -1,59 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './UserInfoPage.css';
 import { useNavigate } from 'react-router-dom';
 import Api from '../api';
 
 const UserInfoPage = () => {
   const [formData, setFormData] = useState({
-    nickname: '',
-    height: '',
-    weight: '',
-    sex: '',
-    type: '',
-    activityLevel: '',
+    nickname: '햅잇',
+    height: '180',
+    weight: '80',
+    sex: 'male',
+    type: 'maintain',
+    activityLevel: 'moderatelyActive',
   });
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('use effect');
-    const code = new URL(window.location.href).searchParams.get('code');
-    if (code) {
-      // 1. 카카오 서버에 인가 코드로 액세스 토큰 요청
-      Api.getKakaoAccessToken(code)
-        .then((response) => {
-          const { access_token } = response.data;
-          console.log('kakao server response');
-          console.log(response.data);
-          localStorage.setItem('snsToken', access_token); // 토큰을 로컬 스토리지에 저장
-          console.log('로그인 성공');
-          navigate('/userinfo'); // UserInfoPage로 이동
-        })
-        .catch((error) => {
-          console.error('카카오 토큰 요청 실패:', error);
-          alert('카카오 로그인 실패. 다시 시도해주세요.');
-        });
-    }
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = () => {
+  const putUser = async () => {
     const { nickname, height, weight, sex, type, activityLevel } = formData;
 
     if (!nickname || !height || !weight || !sex || !type || !activityLevel) {
       alert('모든 정보를 입력해주세요.');
       return;
     }
-    const snsToken = `${localStorage.getItem('snsToken')}`;
-    console.log({ snsToken });
-
-    // 2. 사용자 정보와 액세스 토큰을 백엔드로 전송
-    console.log({
-      snsToken,
+    await Api.PutUser({
       nickname,
       height: parseInt(height),
       weight: parseInt(weight),
@@ -61,35 +30,22 @@ const UserInfoPage = () => {
       type,
       activityLevel,
     });
+  };
 
-    Api.kakaoSignOrUp({
-      snsToken,
-      nickname,
-      height: parseInt(height),
-      weight: parseInt(weight),
-      sex,
-      type,
-      activityLevel,
-    })
-      .then((data) => {
-        console.log('서버 응답:', data);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-        // token 추출 및 저장
-        const { token } = data;
-        if (token) {
-          localStorage.setItem('Back_Token', token); // token을 localStorage에 저장
-          console.log('토큰 저장 성공:', token);
-        } else {
-          console.warn('응답에 토큰이 없습니다.');
-        }
+  const handleSubmit = async () => {
+    try {
+      await putUser();
+    } catch (error) {
+      console.error(error);
+      alert('유저 정보 저장에 실패했습니다.');
+    }
 
-        alert('사용자 정보가 저장되었습니다!');
-        navigate('/nutrition'); // NutritionPage로 이동
-      })
-      .catch((error) => {
-        console.log('사용자 정보 저장 실패:', error);
-        alert('사용자 정보 저장 실패. 다시 시도해주세요.');
-      });
+    navigate('/nutrition');
   };
 
   return (
