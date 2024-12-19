@@ -1,25 +1,28 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "hab-eat",
+  "name": "hab-eat",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "/icon/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
+      "_comment" : "192,192는 splash화면",
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192" 
     },
     {
-      "src": "logo512.png",
+      "src": "/icon/512-maskable.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose" : "maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#00C5A1",
+  "background_color": "#ffffff",
+  "orientation": "portrait"
 }
