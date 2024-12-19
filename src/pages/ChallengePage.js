@@ -150,8 +150,8 @@ const ChallengePage = () => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   const [weekStatusMap, setWeekStatusMap] = useState({}); // 주차별 status 저장
   const showCameraButton = challengeId === 5 || challengeId === 6;
-  console.log(name);
-  console.log(description);
+  // console.log(name);
+  // console.log(description);
   // console.log(month);
   // console.log(year);
 
