@@ -142,7 +142,7 @@ const ChallengePage = () => {
   const navigate = useNavigate();
   const [date, setDate] = useState(new Date());
   const location = useLocation();
-  const { challengeId, month, year } = location.state;
+  const { challengeId, name, description, month, year } = location.state;
   const [logMap, setLogMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -150,8 +150,8 @@ const ChallengePage = () => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   const [weekStatusMap, setWeekStatusMap] = useState({}); // 주차별 status 저장
   const showCameraButton = challengeId === 5 || challengeId === 6;
-  const [challenge, setChallenge] = useState(null); // 상태로 데이터 관리
-  // console.log(challengeId);
+  console.log(name);
+  console.log(description);
   // console.log(month);
   // console.log(year);
 
@@ -198,7 +198,7 @@ const ChallengePage = () => {
     };
 
     fetchLogs();
-  }, [challengeId, month, year]);
+  }, [challengeId, name, description, month, year]);
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -232,12 +232,7 @@ const ChallengePage = () => {
     };
 
     fetchLogs();
-  }, [challengeId, month, year]);
-
-
-  useEffect(() => {
-    fetchChallengeDescription(challengeId, setChallenge);
-  }, [challengeId, setChallenge]);
+  }, [challengeId, name, description, month, year]);
   
 
   if (loading) return <p>LoadingPage</p>;
@@ -274,7 +269,7 @@ const ChallengePage = () => {
     const file = event.target.files[0];
     // if (file) alert(`사진이 선택되었습니다: ${file.name}`);
     if (file) {
-      navigate(`/challenge/camera`, { state: { file, id } });
+      navigate(`/challenge/camera`, { state: { file, id, name, description } });
     }
   };
 
@@ -285,9 +280,9 @@ const ChallengePage = () => {
       </div>
       <div className="App">
         <div className='challenge-container'>
-          <p className="challenge-name">{challenge.name}</p>
+          <p className="challenge-name">{name}</p>
           <p>|</p>
-          <p className="challenge-description">{challenge.description}</p>
+          <p className="challenge-description">{description}</p>
         </div>
         <div className="manage">
           <div className="custom-header">
@@ -355,17 +350,3 @@ const ChallengePage = () => {
 };
 
 export default ChallengePage;
-
-const fetchChallengeDescription = async (id, setChallenge) => {
-  const response = await Api.getChallenges();
-  const challenges = response.ongingChallenges;
-  const targetChallenge = challenges.find((challenge) => challenge.id === id);
-  // console.log(targetChallenge);
-  // console.log(targetChallenge.description);
-  if (targetChallenge) {
-    setChallenge(targetChallenge); // 상태 업데이트
-  } else {
-    console.log(`ID가 ${id}인 챌린지를 찾을 수 없습니다.`);
-  }
-  // return targetChallenge.description;
-}

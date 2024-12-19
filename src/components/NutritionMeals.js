@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './NutritionMeals.css';
 import api from '../api';
 
-const NutritionMeals = () => {
+const NutritionMeals = ({ selectedDate }) => {
   const [meals, setMeals] = useState({
     breakfast: [],
     lunch: [],
@@ -14,16 +14,14 @@ const NutritionMeals = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const dateString = new Date(Date.now() + 9 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10);
+        const dateString = selectedDate.toISOString().slice(0, 10);
         const res = await api.getDiets(dateString);
         setMeals(res);
       } catch (error) {}
     };
 
     fetch();
-  }, []);
+  }, [selectedDate]);
 
   const handleFoodClick = (food) => {
     setSelectedFood(food);
@@ -53,7 +51,7 @@ const NutritionMeals = () => {
                   key={idx}
                   className="meal-item"
                   onClick={() => handleFoodClick(food)}
-                  style={{ cursor: 'pointer', color: '#007bff' }}
+                  style={{ cursor: 'pointer', color: '#00c5a1' }}
                 >
                   {food.name}
                 </p>
@@ -70,14 +68,14 @@ const NutritionMeals = () => {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>{selectedFood.name}</h2>
             <ul className="nutrition-list">
-              <li>amount: {selectedFood.amount} g</li>
-              <li>kcal: {selectedFood.kcal} kcal</li>
-              <li>carbohydrate: {selectedFood.carbohydrate} g</li>
-              <li>protein: {selectedFood.protein} g</li>
-              <li>fat: {selectedFood.fat} g</li>
-              <li>natrium: {selectedFood.natrium} mg</li>
-              <li>cholesterol: {selectedFood.cholesterol} mg</li>
-              <li>sugar: {selectedFood.sugar} g</li>
+              <li>양: {Math.round(selectedFood.amount)} g</li>
+              <li>칼로리: {Math.round(selectedFood.kcal)} kcal</li>
+              <li>탄수화물: {Math.round(selectedFood.carbohydrate)} g</li>
+              <li>단백질: {Math.round(selectedFood.protein)} g</li>
+              <li>지방: {Math.round(selectedFood.fat)} g</li>
+              <li>나트륨: {Math.round(selectedFood.natrium)} mg</li>
+              <li>콜레스테롤: {Math.round(selectedFood.cholesterol)} mg</li>
+              <li>당: {Math.round(selectedFood.sugar)} g</li>
             </ul>
             <button className="close-button" onClick={closeModal}>
               닫기

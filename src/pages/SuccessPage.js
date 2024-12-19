@@ -7,7 +7,7 @@ const SuccessPage = () => {
 
   // 분석 결과 및 기타 데이터 가져오기
   //   const { analysisResult, id } = location.state || {};
-  const { challengeId, month, year } = location.state || {};
+  const { challengeId, name, description, month, year } = location.state || {};
 
   useEffect(() => {
     // body 스타일 설정
@@ -59,7 +59,7 @@ const SuccessPage = () => {
         }}
         onClick={() =>
           navigate('/challenge', {
-            state: { challengeId: challengeId, month, year },
+            state: { challengeId: challengeId, name, description, month, year },
           })
         }
       >
