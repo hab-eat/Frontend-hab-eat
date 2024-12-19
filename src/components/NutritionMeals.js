@@ -14,7 +14,10 @@ const NutritionMeals = ({ selectedDate }) => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const dateString = selectedDate.toISOString().slice(0, 10);
+        const dateString = new Date(selectedDate.getTime() + 9 * 60 * 60 * 1000)
+          .toISOString()
+          .slice(0, 10);
+
         const res = await api.getDiets(dateString);
         setMeals(res);
       } catch (error) {}
@@ -57,9 +60,7 @@ const NutritionMeals = ({ selectedDate }) => {
                 </p>
               ))
             ) : (
-              <p>
-                
-              </p>
+              <p></p>
             )}
           </div>
         </div>
