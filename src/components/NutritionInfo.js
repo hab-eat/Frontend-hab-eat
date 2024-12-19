@@ -65,25 +65,25 @@ const NutritionInfo = ({ selectedDate }) => {
       {
         <>
           <p>
-            칼로리: <b>{dietsStats.kcal}</b>/
+            칼로리: <b>{Math.round(dietsStats.kcal)}</b>/
             <b>{Math.round(targetNutrients.kcal)}</b> kcal
           </p>
           <p>
-            탄수화물: <b>{dietsStats.carbohydrate}</b>/
+            탄수화물: <b>{Math.round(dietsStats.carbohydrate)}</b>/
             <b>{Math.round(targetNutrients.carbohydrate)}</b>g | 단백질:{' '}
-            <b>{dietsStats.protein}</b>/
+            <b>{Math.round(dietsStats.protein)}</b>/
             <b>{Math.round(targetNutrients.protein)}</b>g
           </p>
           <p>
-            지방: <b>{dietsStats.fat}</b>/
+            지방: <b>{Math.round(dietsStats.fat)}</b>/
             <b>{Math.round(targetNutrients.fat)}</b>g | 나트륨:{' '}
-            <b>{dietsStats.natrium}</b>/
+            <b>{Math.round(dietsStats.natrium)}</b>/
             <b>{Math.round(targetNutrients.natrium)}</b>mg
           </p>
           <p>
-            콜레스테롤: <b>{dietsStats.cholesterol}</b>/
+            콜레스테롤: <b>{Math.round(dietsStats.cholesterol)}</b>/
             <b>{Math.round(targetNutrients.cholesterol)}</b>mg | 당:{' '}
-            <b>{dietsStats.sugar}</b>/<b>{Math.round(targetNutrients.sugar)}</b>
+            <b>{Math.round(dietsStats.sugar)}</b>/<b>{Math.round(targetNutrients.sugar)}</b>
             g
           </p>
         </>
