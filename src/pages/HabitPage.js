@@ -63,10 +63,10 @@ export const HabitPage = () => {
   const openModal = (challenge) => {
     const today = new Date();
 
-    if (process.env.NODE_ENV === 'production' && today.getDay() !== 1) {
-      alert('챌린지 참여 신청은 월요일에만 가능합니다.');
-      return;
-    }
+    // if (process.env.NODE_ENV === 'production' && today.getDay() !== 1) {
+    //   alert('챌린지 참여 신청은 월요일에만 가능합니다.');
+    //   return;
+    // }
 
     setSelectedChallenge(challenge);
     setIsModalOpen(true);
