@@ -5,12 +5,12 @@ import Api from '../api';
 
 const UserInfoPage = () => {
   const [formData, setFormData] = useState({
-    nickname: '햅잇',
-    height: '180',
-    weight: '80',
-    sex: 'male',
-    type: 'maintain',
-    activityLevel: 'moderatelyActive',
+    nickname: '',
+    height: '',
+    weight: '',
+    sex: '',
+    type: '',
+    activityLevel: '',
   });
 
   const navigate = useNavigate();
