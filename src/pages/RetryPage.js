@@ -7,7 +7,7 @@ const RetryPage = () => {
   const fileInputRef = useRef(null);
 
   // 에러 정보 및 기타 데이터 가져오기
-  const { challengeId, month, year, error, message } = location.state || {};
+  const { challengeId, name, description, month, year, error, message } = location.state || {};
 
   const handleCameraClick = () => fileInputRef.current.click();
   const handleFileChange = (event) => {
@@ -15,7 +15,7 @@ const RetryPage = () => {
     const file = event.target.files[0];
     // if (file) alert(`사진이 선택되었습니다: ${file.name}`);
     if (file) {
-      navigate(`/challenge/camera`, { state: { file, id } });
+      navigate(`/challenge/camera`, { state: { file, id, name, description} });
     }
   };
 
@@ -85,7 +85,7 @@ const RetryPage = () => {
             cursor: 'pointer',
           }}
           onClick={() =>
-            navigate('/challenge', { state: { challengeId, month, year } })
+            navigate('/challenge', { state: { challengeId, name, description, month, year } })
           }
         >
           돌아가기

@@ -38,6 +38,7 @@ export const HabitPage = () => {
         data.ongingChallenges.map((challenge) => ({
           id: challenge.id,
           name: challenge.name,
+          description: challenge.description,
           challengeId: challenge.id,
           challengeType: challenge.type || 'unknown',
           goalDays: challenge.goalDays,
@@ -166,6 +167,8 @@ export const HabitPage = () => {
       navigate(`/challenge`, {
         state: {
           challengeId: selected.id,
+          name: selected.name,
+          description: selected.description,
           goalDays: selected.goalDays,
           month,
           year,
