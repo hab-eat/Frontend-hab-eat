@@ -10,7 +10,6 @@ const NutritionCalendar = ({ selectedDate, setSelectedDate }) => {
   };
 
   const handleDateChange = (date) => {
-    date.setHours(date.getHours() + 9); //달력이 하루 씩 밀려 추가함
     setSelectedDate(date);
     setIsCalendarOpen(false);
   };

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './NutritionMeals.css';
 import api from '../api';
 
-const NutritionMeals = () => {
+const NutritionMeals = ({ selectedDate }) => {
   const [meals, setMeals] = useState({
     breakfast: [],
     lunch: [],
@@ -14,16 +14,14 @@ const NutritionMeals = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const dateString = new Date(Date.now() + 9 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10);
+        const dateString = selectedDate.toISOString().slice(0, 10);
         const res = await api.getDiets(dateString);
         setMeals(res);
       } catch (error) {}
     };
 
     fetch();
-  }, []);
+  }, [selectedDate]);
 
   const handleFoodClick = (food) => {
     setSelectedFood(food);
