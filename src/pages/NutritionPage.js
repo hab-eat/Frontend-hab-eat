@@ -9,9 +9,7 @@ import NutritionCalendar from '../components/NutritionCalendar';
 import NutritionMeals from '../components/NutritionMeals';
 
 const NutritionPage = () => {
-  const [selectedDate, setSelectedDate] = useState(
-    new Date(Date.now() + 9 * 60 * 60 * 1000),
-  );
+  const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
   const [isLoading, setLoading] = useState(false);
   if (isLoading) return <LoadingPage />;
 
@@ -22,7 +20,7 @@ const NutritionPage = () => {
         setSelectedDate={setSelectedDate}
       />
       <NutritionInfo selectedDate={selectedDate} />
-      <NutritionMeals />
+      <NutritionMeals selectedDate={selectedDate} />
       <NavigationBar
         CarmeraElement={<NutritionCarmera setLoading={setLoading} />}
       />
