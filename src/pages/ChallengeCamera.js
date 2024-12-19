@@ -49,7 +49,7 @@ const ChallengeCamera = () => {
         console.log('이미지 분석 중 오류 발생:', error.code);
 
         let message;
-        if (error.code === 'ERR_BAD_REQUEST') {
+        if (error.response.status === 409) {
           message = '이미 인증 완료된 챌린지입니다.';
         }
         navigate('/retry', {
