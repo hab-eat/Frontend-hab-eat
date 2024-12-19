@@ -26,11 +26,8 @@ const FoodAnalysisRetryPage = () => {
           <span>{foodName}</span>입니다!
         </h2>
         <div className="result-second-image-container">
-          <img
-            src={'/folder.png'}
-            alt={`${foodName} 이미지`}
-            className="result-second-image"
-          />
+          
+          
         </div>
         <div className="result-second-buttons">
           <button className="result-second-button" onClick={onClickRetryBtn}>
