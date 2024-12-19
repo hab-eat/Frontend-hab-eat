@@ -42,6 +42,7 @@ const DirectInputPage = () => {
 
       const dietsStats = await api.getDietsStats(dateString);
       await api.postNutriChallengeCertifications({
+        amount: dietsStats.amount,
         kcal: dietsStats.kcal,
         carbohydrate: dietsStats.carbohydrate,
         protein: dietsStats.protein,
@@ -139,6 +140,17 @@ const DirectInputPage = () => {
             value={formData.natrium}
             onChange={handleChange}
             placeholder="예: 1"
+          />
+        </div>
+        <div className="direct-input-group">
+          <label htmlFor="cholestrol">콜레스테롤 (mg)</label>
+          <input
+            type="number"
+            id="cholestrol"
+            name="cholestrol"
+            value={formData.cholestrol}
+            onChange={handleChange}
+            placeholder="예: 0"
           />
         </div>
         <div className="direct-input-group">
