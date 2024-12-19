@@ -45,7 +45,14 @@ const ChallengeCamera = () => {
         const analysisResult = await certifyChallengeImage(id, key);
 
         navigate('/success', {
-          state: { analysisResult, challengeId: id, name, description, month, year },
+          state: {
+            analysisResult,
+            challengeId: id,
+            name,
+            description,
+            month,
+            year,
+          },
         });
       } catch (error) {
         console.log('이미지 분석 중 오류 발생:', error.code);
@@ -55,7 +62,15 @@ const ChallengeCamera = () => {
           message = '이미 인증 완료된 챌린지입니다.';
         }
         navigate('/retry', {
-          state: { challengeId: id, name, description, month, year, message },
+          state: {
+            challengeId: id,
+            name,
+            description,
+            month,
+            year,
+            message,
+            errorCode: error?.response?.status,
+          },
         });
       } finally {
         setLoading(false); // 로딩 종료
