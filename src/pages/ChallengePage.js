@@ -233,10 +233,9 @@ const ChallengePage = () => {
 
     fetchLogs();
   }, [challengeId, name, description, month, year]);
-  
 
-  if (loading) return <p>LoadingPage</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p></p>;
+  if (error) return <p></p>;
 
   const formatDateKey = (date) => {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
@@ -279,7 +278,7 @@ const ChallengePage = () => {
         <h1 className="title">챌린지</h1>
       </div>
       <div className="App">
-        <div className='challenge-container'>
+        <div className="challenge-container">
           <p className="challenge-name">{name}</p>
           <p>|</p>
           <p className="challenge-description">{description}</p>
