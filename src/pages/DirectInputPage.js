@@ -154,7 +154,7 @@ const DirectInputPage = () => {
             type="number"
             id="cholestrol"
             name="cholestrol"
-            value={formData.cholestrol}
+            value={formData.cholesterol}
             onChange={handleChange}
             placeholder="예: 0"
           />
