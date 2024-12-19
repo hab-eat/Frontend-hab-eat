@@ -88,9 +88,7 @@ const ChallengeCamera = () => {
         background:
           'linear-gradient(172deg, #00CBA6 10.22%, #00CBA6 40.85%, #0086D3 89.78%)',
       }}
-    >
-      <h1>로딩 중...</h1>
-    </div>
+    ></div>
   );
 };
 
