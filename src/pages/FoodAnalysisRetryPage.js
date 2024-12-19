@@ -63,7 +63,7 @@ const FoodAnalysisRetryPage = () => {
 
   return (
     <div className="result-second-container">
-      <div className="result-second-overlay"></div> {/* 어두운 레이어 */}
+    <div className="result-second-overlay"></div> {/* 어두운 레이어 */}
       <div className="result-second-content">
         <h1 className="result-second-title">{comment}</h1>
         <h2 className="result-second-food-name">
@@ -71,7 +71,10 @@ const FoodAnalysisRetryPage = () => {
           <span>{foodName}</span>입니다!
         </h2>
         <div className="result-second-image-container">
-          
+        <img
+            src={'/folder.png'}        
+          className="result-image"
+        />
           
         </div>
         <div className="result-second-buttons">

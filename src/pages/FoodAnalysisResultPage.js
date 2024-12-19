@@ -27,8 +27,7 @@ const FoodAnalysisResultPage = () => {
       </h2>
       <div className="result-image-container">
         <img
-          src={'/folder.png'}
-          alt={`${foodName} 이미지`}
+            src={'/folder.png'}        
           className="result-image"
         />
       </div>

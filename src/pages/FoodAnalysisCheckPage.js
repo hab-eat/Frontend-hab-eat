@@ -27,7 +27,6 @@ const FoodAnalysisCheckPage = () => {
         <div className="result-second-image-container">
           <img
             src={'/folder.png'}
-            alt={`${foodName} 이미지`}
             className="result-second-image"
           />
         </div>

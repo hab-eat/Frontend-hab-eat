@@ -28,7 +28,11 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     color: #333;
 }
-
+.direct-input-grounp.name{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
 /* 입력 그룹 */
 .direct-input-group {
     display: flex;
