@@ -106,6 +106,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import Api from '../api';
+import habeatIcon from '../img/Hab-eat.svg';
 
 const LoginPage = () => {
   const redirectUrl = process.env.REACT_APP_KAKAO_REDIRECT_URL; // 카카오 개발자 콘솔에 등록된 Redirect URI
@@ -141,9 +142,9 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <h1 className="title">한 손에 들고 먹는 건강한 습관</h1>
+      <h1 className="slogan">한 손에 들고 먹는 건강한 습관</h1>
       <img
-        src="./Hab-eat.png" // 로고 이미지
+        src={habeatIcon} // 로고 이미지
         alt="App Logo"
         className="logo"
       />

@@ -13,7 +13,7 @@ const FoodAnalysisRetryPage = () => {
   };
 
   const onClickEnterBtn = () => {
-    navigate('/food/autocomplete');
+    navigate('/food/direct-input');
   };
 
   return (
