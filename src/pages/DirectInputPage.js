@@ -9,21 +9,21 @@ const DirectInputPage = () => {
 
   const [formData, setFormData] = useState({
     name: location.state?.name || '',
-    amount: 0,
-    kcal: 0,
-    carbohydrate: 0,
-    protein: 0,
-    fat: 0,
-    natrium: 0,
-    cholesterol: 0,
-    sugar: 0,
-    calcium: 0,
-    phosphorus: 0,
-    kalium: 0,
-    magnesium: 0,
-    iron: 0,
-    zinc: 0,
-    transfat: 0,
+    amount: '',
+    kcal: '',
+    carbohydrate: '',
+    protein: '',
+    fat: '',
+    natrium: '',
+    cholesterol: '',
+    sugar: '',
+    calcium: '',
+    phosphorus: '',
+    kalium: '',
+    magnesium: '',
+    iron: '',
+    zinc: '',
+    transfat: '',
   });
 
   const handleChange = (e) => {
@@ -91,7 +91,6 @@ const DirectInputPage = () => {
             value={formData.amount}
             onChange={handleChange}
             placeholder="예: 100"
-            required
           />
         </div>
         <div className="direct-input-group">
@@ -155,7 +154,7 @@ const DirectInputPage = () => {
             type="number"
             id="cholestrol"
             name="cholestrol"
-            value={formData.cholestrol}
+            value={formData.cholesterol}
             onChange={handleChange}
             placeholder="예: 0"
           />
