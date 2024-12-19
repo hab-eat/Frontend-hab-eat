@@ -8,6 +8,8 @@ const NutritionMeals = () => {
     lunch: [],
     dinner: [],
   });
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -23,6 +25,16 @@ const NutritionMeals = () => {
     fetch();
   }, []);
 
+  const handleFoodClick = (food) => {
+    setSelectedFood(food);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedFood(null);
+  };
+
   return (
     <div className="meal-section">
       {['breakfast', 'lunch', 'dinner'].map((mealKey) => (
@@ -36,20 +48,43 @@ const NutritionMeals = () => {
           </h3>
           <div className="meal-box">
             {meals[mealKey].length > 0 ? (
-              meals[mealKey].map((food, idx) => {
-                console.log(food.name);
-                return (
-                  <p key={idx} className="meal-item">
-                    {food.name}
-                  </p>
-                );
-              })
+              meals[mealKey].map((food, idx) => (
+                <p
+                  key={idx}
+                  className="meal-item"
+                  onClick={() => handleFoodClick(food)}
+                  style={{ cursor: 'pointer', color: '#007bff' }}
+                >
+                  {food.name}
+                </p>
+              ))
             ) : (
               <p>등록된 음식이 없습니다.</p>
             )}
           </div>
         </div>
       ))}
+
+      {isModalOpen && selectedFood && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>{selectedFood.name}</h2>
+            <ul className="nutrition-list">
+              <li>amount: {selectedFood.amount} g</li>
+              <li>kcal: {selectedFood.kcal} kcal</li>
+              <li>carbohydrate: {selectedFood.carbohydrate} g</li>
+              <li>protein: {selectedFood.protein} g</li>
+              <li>fat: {selectedFood.fat} g</li>
+              <li>natrium: {selectedFood.natrium} mg</li>
+              <li>cholesterol: {selectedFood.cholesterol} mg</li>
+              <li>sugar: {selectedFood.sugar} g</li>
+            </ul>
+            <button className="close-button" onClick={closeModal}>
+              닫기
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
