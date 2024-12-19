@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import './NutritionCarmera.css';
 import Api from '../api';
 import { useNavigate } from 'react-router-dom';
+import cameraIcon from '../img/camera-icon.svg';
 
 const NutritionCarmera = ({ setLoading }) => {
   const fileInputRef = useRef(null);
@@ -48,7 +49,7 @@ const NutritionCarmera = ({ setLoading }) => {
   return (
     <div className="nav-center">
       <button className="camera-button" onClick={handleCameraClick}>
-        <img src="/camera-icon.png" alt="카메라" className="camera-icon" />
+        <img src={cameraIcon} alt="카메라" className="camera-icon" />
       </button>
       <input
         type="file"
