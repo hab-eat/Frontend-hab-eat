@@ -149,11 +149,11 @@ const DirectInputPage = () => {
           />
         </div>
         <div className="direct-input-group">
-          <label htmlFor="cholestrol">콜레스테롤 (mg)</label>
+          <label htmlFor="cholesterol">콜레스테롤 (mg)</label>
           <input
             type="number"
-            id="cholestrol"
-            name="cholestrol"
+            id="cholesterol"
+            name="cholesterol"
             value={formData.cholesterol}
             onChange={handleChange}
             placeholder="예: 0"
