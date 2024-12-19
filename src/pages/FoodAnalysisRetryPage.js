@@ -1,5 +1,5 @@
 import React from 'react';
-import './FoodAnalysisCheckPage.css'; // ResultSecond.js 재사용
+import './FoodAnalysisCheckPage.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const FoodAnalysisRetryPage = () => {
@@ -13,7 +13,7 @@ const FoodAnalysisRetryPage = () => {
   };
 
   const onClickEnterBtn = () => {
-    navigate('/food/autocomplete');
+    navigate('/food/direct-input');
   };
 
   return (
