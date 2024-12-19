@@ -9,7 +9,7 @@ const DirectInputPage = () => {
 
   const [formData, setFormData] = useState({
     name: location.state?.name || '',
-    amount: 100,
+    amount: 0,
     kcal: 0,
     carbohydrate: 0,
     protein: 0,
@@ -17,6 +17,13 @@ const DirectInputPage = () => {
     natrium: 0,
     cholesterol: 0,
     sugar: 0,
+    calcium: 0,
+    phosphorus: 0,
+    kalium: 0,
+    magnesium: 0,
+    iron: 0,
+    zinc: 0,
+    transfat: 0,
   });
 
   const handleChange = (e) => {
