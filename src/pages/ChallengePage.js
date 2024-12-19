@@ -150,7 +150,7 @@ const ChallengePage = () => {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
   const [weekStatusMap, setWeekStatusMap] = useState({}); // 주차별 status 저장
   const showCameraButton = challengeId === 5 || challengeId === 6;
-
+  const [challenge, setChallenge] = useState(null); // 상태로 데이터 관리
   // console.log(challengeId);
   // console.log(month);
   // console.log(year);
@@ -234,6 +234,12 @@ const ChallengePage = () => {
     fetchLogs();
   }, [challengeId, month, year]);
 
+
+  useEffect(() => {
+    fetchChallengeDescription(challengeId, setChallenge);
+  }, [challengeId, setChallenge]);
+  
+
   if (loading) return <p>LoadingPage</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -278,6 +284,11 @@ const ChallengePage = () => {
         <h1 className="title">챌린지</h1>
       </div>
       <div className="App">
+        <div className='challenge-container'>
+          <p className="challenge-name">{challenge.name}</p>
+          <p>|</p>
+          <p className="challenge-description">{challenge.description}</p>
+        </div>
         <div className="manage">
           <div className="custom-header">
             <div className="month">
@@ -344,3 +355,17 @@ const ChallengePage = () => {
 };
 
 export default ChallengePage;
+
+const fetchChallengeDescription = async (id, setChallenge) => {
+  const response = await Api.getChallenges();
+  const challenges = response.ongingChallenges;
+  const targetChallenge = challenges.find((challenge) => challenge.id === id);
+  // console.log(targetChallenge);
+  // console.log(targetChallenge.description);
+  if (targetChallenge) {
+    setChallenge(targetChallenge); // 상태 업데이트
+  } else {
+    console.log(`ID가 ${id}인 챌린지를 찾을 수 없습니다.`);
+  }
+  // return targetChallenge.description;
+}
